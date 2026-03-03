@@ -24,26 +24,14 @@ gita2112/
 3. ZIP dosyasını aç ve istediğin klasöre taşı
 4. Her hafta yeni dosyalar eklendiğinde bu adımları tekrarla
 
-### Yöntem 2: Git ile Clone & Pull (Tavsiye Edilen)
+### Yöntem 2: Git ile Clone & Pull (Uzun vadeli çözüm)
 
 ZIP yönteminde her hafta dosyaları tekrar indirip açman gerekir. Git kullanırsan yalnızca tek bir komutla (`git pull`) o haftaya eklenen tüm yeni dosyalar bilgisayarına gelir — ZIP indirmene gerek kalmaz.
 
 #### Git Kurulumu
 
-**Windows**
-[git-scm.com/download/win](https://git-scm.com/download/win) adresinden yükleyiciyi indir ve çalıştır. Kurulum sırasında varsayılan seçenekleri bırakabilirsin.
+Öncelikle sisteminizde git kurulu olup olmadığını kontrol edin. Terminal veya WSL üzerinde git komutunu verdiğinizde komutu bulamıyorsa kurmanız gereklidir. [git-scm.com/download/](http://git-scm.com/download/) adresinden işletim sisteminizi seçerek belirtilen yolla kurulumu gerçekleştirin.
 
-**macOS**
-Terminal'i aç ve şunu çalıştır:
-```bash
-xcode-select --install
-```
-Açılan pencerede **Install** butonuna tıkla. Git otomatik olarak kurulur.
-
-**Linux (Ubuntu / Debian)**
-```bash
-sudo apt update && sudo apt install git
-```
 
 ---
 
