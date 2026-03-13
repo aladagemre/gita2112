@@ -37,8 +37,63 @@ python3 odev04_while.py
 
 1. Dosyayı aç
 2. `...` yerlerini doldur
-3. Çalıştır — çıktıyı dosya sonundaki **Beklenen Çıktı** yorumuyla karşılaştır
-4. Çıktılar eşleşene kadar düzenle
+3. **Kontrol aracını çalıştır** (aşağıya bak)
+4. Çalıştır — çıktıyı dosya sonundaki **Beklenen Çıktı** yorumuyla karşılaştır
+5. Çıktılar eşleşene kadar düzenle
+
+---
+
+## Göndermeden Önce: Kontrol Aracı (`kontrol.py`)
+
+Ödevlerini göndermeden önce bu aracı çalıştırarak temel hataları yakala.
+Kontrol aracı şunları tarar:
+
+- **Sözdizimi hataları** (SyntaxError) — kod çalışmaz, düzeltmen gerekir
+- **Doldurulmamış `...` yer tutucuları** — eksik bırakılan yerler
+- **Yanlış değişken tipleri** — sayı olması gereken değişkene metin atanmışsa
+
+### Nasıl Çalıştırılır?
+
+**Tüm ödevleri kontrol et:**
+
+```
+cd hafta3/odevler
+python3 kontrol.py
+```
+
+**Tek bir ödevi kontrol et:**
+
+```
+python3 kontrol.py odev01_liste_temel.py
+```
+
+### Çıktıyı Nasıl Okurum?
+
+| İşaret | Anlam | Ne Yapmalısın? |
+|---|---|---|
+| `[X] HATA` | Kod çalışmaz | Bu satırı mutlaka düzelt |
+| `[?] EKSİK` | `...` yer tutucusu doldurulmamış | İpucunu oku ve ifadeyi yaz |
+| `[!] UYARI` | Olası sorun | Kontrol et, gerekirse düzelt |
+| `TAMAM` | Sorun bulunamadı | Kodu çalıştır ve çıktıyı kontrol et |
+
+### Örnek
+
+```
+$ python3 kontrol.py odev01_liste_temel.py
+
+==================================================
+  odev01_liste_temel.py
+==================================================
+  [?] Satır 33: Bu satırdaki ... yer tutucusu doldurulmamış
+       | ...  # ← malzemeler.append("yeni_malzeme") şeklinde yaz
+
+  --- Özet ---
+  [?] 1 eksik (... yer tutucusu doldurulmamış)
+```
+
+> **Önemli:** Kontrol aracı temel hataları yakalar ama her şeyi bulamaz.
+> Aracın "TAMAM" demesi kodun doğru çalıştığı anlamına gelmez — mutlaka
+> kodu çalıştırıp çıktıyı **Beklenen Çıktı** ile karşılaştır.
 
 ---
 
