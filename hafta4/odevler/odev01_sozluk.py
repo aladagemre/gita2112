@@ -1,5 +1,5 @@
 # =============================================================
-# ÖDEV 5: Sözlükler — Proje Kartı  [Orta-Zor]
+# ÖDEV 1: Sözlükler — Proje Kartı  [Kolay-Orta]
 # =============================================================
 # Bu ödevde yapacakların:
 #   - Sözlük oluştur ve değerlere eriş

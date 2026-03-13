@@ -1,4 +1,4 @@
-# GİTA 2112 — Hafta 3: Listeler, Döngüler, Demetler ve Sözlükler
+# GİTA 2112 — Hafta 3: Listeler, Döngüler ve Demetler
 
 Bu klasördeki dosyalar, derste birlikte işlediğimiz konuları sıralı bir şekilde içermektedir. Her dosyayı açıp çalıştırın, kodları okuyun, yorumları dikkatlice inceleyin.
 
@@ -42,8 +42,6 @@ python3 03_for_dongusu.py
 | `04_for_liste.py` | `for` ile liste gezme, `enumerate()`, filtreleme |
 | `05_while_dongusu.py` | `while` döngüsü, `break`, tahmin oyunu |
 | `06_demetler.py` | Demet `()`, değiştirilemezlik, RGB renk kodları |
-| `07_sozlukler.py` | Sözlük `{}`, anahtar-değer, `.items()` |
-| `08_hepsi_bir_arada.py` | Liste + sözlük + döngü + koşul birleşik örnek |
 
 ---
 
@@ -61,14 +59,11 @@ Köşeli parantez `[]` ile liste oluşturabilmeli, indeksle elemanlara erişebil
 ### Demetler
 Demetlerin listelerden farkını (değiştirilemezlik) açıklayabilmelisiniz. Sabit verilerin (RGB renk kodları, koordinatlar) neden demet ile saklanması gerektiğini anlıyor olmalısınız.
 
-### Sözlükler
-Anahtar-değer çifti mantığını kavramış olmalısınız. Sözlük oluşturup değer okuyabilmeli, yeni çift ekleyebilmeli ve `.items()` ile döngü kurabilmelisiniz.
-
 ### Ek Kavramlar
-Derslerde ayrıca `end=" "` (print davranışını değiştirme), `round()` (yuvarlama), `range(len(liste))` (indeksle gezme) ve `"=" * 45` (string tekrarlama) gibi küçük araçlarla da tanıştınız. Bunları ezberlemek zorunda değilsiniz ama karşınıza çıktığında tanıyabilmelisiniz.
+Derslerde ayrıca `end=" "` (print davranışını değiştirme) ve `range(len(liste))` (indeksle gezme) gibi küçük araçlarla da tanıştınız. Bunları ezberlemek zorunda değilsiniz ama karşınıza çıktığında tanıyabilmelisiniz.
 
 ---
 
 ## Bir Sonraki Adım
 
-Bu konuları kavradıysanız harika! İlerleyen haftalarda fonksiyonlar, dosya işlemleri ve daha karmaşık veri yapılarıyla tanışacaksınız. Şimdilik buradakileri iyice pekiştirmeniz yeterli.
+Bu konuları kavradıysanız harika! Gelecek hafta **sözlükler**, **f-string formatlama**, **continue**, **matematik işlemleri** ve daha fazlasıyla tanışacaksınız. Şimdilik buradakileri iyice pekiştirmeniz yeterli.

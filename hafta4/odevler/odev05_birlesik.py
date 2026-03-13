@@ -1,13 +1,14 @@
 # =============================================================
-# ÖDEV 6: Birleşik — Sınıf Listesi Analizi  [Zor]
+# ÖDEV 5: Birleşik — Sınıf Listesi Analizi  [Zor]
 # =============================================================
 # Bu ödevde yapacakların:
 #   - Sözlük listesi üzerinde döngü kur
+#   - f-string ile formatlı yazdır
+#   - continue ile filtreleme yap
 #   - Toplam ve ortalama hesapla
-#   - Koşulla filtreleme yap
 #   - En yüksek puanlıyı bul
 #
-# Konu: Liste + sözlük + döngü + if
+# Konu: Liste + sözlük + döngü + if + f-string + continue
 # Kazanım: Birden fazla veri yapısını bir arada kullanabilmek
 # =============================================================
 
@@ -28,13 +29,13 @@ ogrenciler = [
 ]
 
 
-# --- Görev 1: Tüm Öğrencileri Listele ---
+# --- Görev 1: Tüm Öğrencileri Listele (f-string ile) ---
 # enumerate() ile numaralı yazdır.
 # Çıktı formatı: "1. Defne (Grafik Tasarım) → 88 puan"
 
 print("--- Öğrenci Listesi ---")
 for sira, ogr in enumerate(...):  # ← enumerate(ogrenciler, start=1) ile tamamla
-    print(str(sira) + ".", ogr["isim"], "(" + ogr["bolum"] + ")", "→", ogr["puan"], "puan")
+    print(f"{sira}. {ogr['isim']} ({ogr['bolum']}) → {ogr['puan']} puan")
 
 
 # --- Görev 2: Ortalama Puan ---
@@ -47,19 +48,19 @@ for ogr in ogrenciler:
 ortalama = ...  # ← toplam / len(ogrenciler)
 
 print()
-# round(ortalama, 1) → virgülden sonra 1 basamak gösterir
-print("Sınıf ortalaması:", ...)  # ← round(ortalama, 1) ile yazdır
+print(f"Sınıf ortalaması: {round(ortalama, 1)}")
 
 
-# --- Görev 3: Başarılı Öğrenciler ---
-# Puanı 75 ve üzeri olanların isimlerini yeni listeye ekle.
+# --- Görev 3: Başarılı Öğrenciler (continue ile) ---
+# Puanı 75'in altında olanları atla, sadece başarılıları yazdır.
+# İpucu: if puan < 75 → continue
 
-basarili = []
+print()
+print("--- Başarılı Öğrenciler ---")
 for ogr in ogrenciler:
-    if ...:  # ← ogr["puan"] >= 75 mi?
-        basarili.append(...)  # ← ogr["isim"]
-
-print("Başarılı öğrenciler:", basarili)
+    if ...:  # ← ogr["puan"] < 75 ise atla
+        continue
+    print(f"  {ogr['isim']} → {ogr['puan']} puan")
 
 
 # --- Görev 4: En Yüksek Puanlı ---
@@ -72,7 +73,7 @@ for ogr in ogrenciler:
         en_iyi = ...  # ← ogr
 
 print()
-print("En başarılı:", ...)  # ← en_iyi["isim"] + puan
+print(f"En başarılı: {en_iyi['isim']} → {en_iyi['puan']} puan")
 
 
 # --- Görev 5: Bölüme Göre Filtreleme ---
@@ -82,7 +83,7 @@ print()
 print("--- Grafik Tasarım Öğrencileri ---")
 for ogr in ogrenciler:
     if ...:  # ← ogr["bolum"] == "Grafik Tasarım" mı?
-        print(...)  # ← isim ve puan yazdır
+        print(f"  {ogr['isim']} → {ogr['puan']} puan")
 
 
 # =============================================================
@@ -100,11 +101,15 @@ for ogr in ogrenciler:
 # 6. Burak (İç Mimarlık) → 55 puan
 #
 # Sınıf ortalaması: 75.8
-# Başarılı öğrenciler: ['Defne', 'Ayşe', 'Elif']
+#
+# --- Başarılı Öğrenciler ---
+#   Defne → 88 puan
+#   Ayşe → 95 puan
+#   Elif → 81 puan
 #
 # En başarılı: Ayşe → 95 puan
 #
 # --- Grafik Tasarım Öğrencileri ---
-# Defne → 88 puan
-# Ayşe → 95 puan
-# Elif → 81 puan
+#   Defne → 88 puan
+#   Ayşe → 95 puan
+#   Elif → 81 puan

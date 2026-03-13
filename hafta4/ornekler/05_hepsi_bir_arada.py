@@ -1,11 +1,13 @@
 # =============================================================
-# DERS 8: Birleşik Örnek — Mini Portfolyo Yöneticisi
+# DERS 5: Birleşik Örnek — Mini Portfolyo Yöneticisi
 # =============================================================
 # Bu derste öğreneceğiz:
 #   - Liste + sözlük birlikte kullanım
 #   - Döngü + koşul kombinasyonu
+#   - f-string ile formatlı yazdırma
+#   - continue ile atlama
 #   - Toplam ve ortalama hesaplama
-#   - Tüm Hafta 3 konularını birleştirme
+#   - Tüm Hafta 4 konularını birleştirme
 
 
 # --- Proje Verileri ---
@@ -21,8 +23,7 @@ projeler = [
 ]
 
 
-# --- Tüm Projeleri Listeleme ---
-# "=" * 45 → 45 tane "=" işareti yazdırır (görsel çizgi oluşturur)
+# --- Tüm Projeleri Listeleme (f-string ile) ---
 print("=" * 45)
 print("       MİNİ PORTFOLYO YÖNETİCİSİ")
 print("=" * 45)
@@ -30,7 +31,18 @@ print()
 
 print("--- Tüm Projeler ---")
 for sira, proje in enumerate(projeler, start=1):
-    print(str(sira) + ".", proje["ad"], "(" + proje["kategori"] + ")", "→", proje["puan"], "puan")
+    print(f"{sira}. {proje['ad']} ({proje['kategori']}) → {proje['puan']} puan")
+
+
+# --- continue ile Düşük Puanlıları Atlama ---
+# 75'in altındaki projeleri atla, sadece başarılıları göster.
+# continue: döngünün geri kalanını atlar, bir sonraki tura geçer.
+print()
+print("--- Başarılı Projeler (75+) ---")
+for proje in projeler:
+    if proje["puan"] < 75:
+        continue    # Bu projeyi atla, sonrakine geç
+    print(f"  - {proje['ad']} → {proje['puan']} puan")
 
 
 # --- Ortalama Hesaplama ---
@@ -40,10 +52,9 @@ for proje in projeler:
 
 ortalama = toplam_puan / len(projeler)
 print()
-print("Proje sayısı:", len(projeler))
-print("Toplam puan:", toplam_puan)
-# round(sayı, 1) → virgülden sonra 1 basamak gösterir. Örnek: 82.5
-print("Ortalama puan:", round(ortalama, 1))
+print(f"Proje sayısı: {len(projeler)}")
+print(f"Toplam puan: {toplam_puan}")
+print(f"Ortalama puan: {ortalama:.1f}")
 
 
 # --- En Yüksek Puanlı Proje ---
@@ -53,17 +64,17 @@ for proje in projeler:
         en_iyi = proje
 
 print()
-print("En iyi proje:", en_iyi["ad"], "→", en_iyi["puan"], "puan")
+print(f"En iyi proje: {en_iyi['ad']} → {en_iyi['puan']} puan")
 
 
 # --- Kategoriye Göre Filtreleme ---
 print()
 aranan_kategori = "Dijital"
-print("--- " + aranan_kategori + " Kategorisi ---")
+print(f"--- {aranan_kategori} Kategorisi ---")
 
 for proje in projeler:
     if proje["kategori"] == aranan_kategori:
-        print("-", proje["ad"], "→", proje["puan"], "puan")
+        print(f"  - {proje['ad']} → {proje['puan']} puan")
 
 
 # --- Başarı Durumu ---
@@ -78,8 +89,8 @@ for proje in projeler:
     else:
         dusuk.append(proje["ad"])
 
-print("Başarılı (75+):", basarili)
-print("Geliştirilmeli:", dusuk)
+print(f"Başarılı (75+): {basarili}")
+print(f"Geliştirilmeli: {dusuk}")
 
 
 # --- Kategori Dağılımı ---
@@ -100,7 +111,7 @@ for proje in projeler:
         kategori_sayisi[kat] = 1
 
 for kat, sayi in kategori_sayisi.items():
-    print(kat + ":", sayi, "proje")
+    print(f"{kat}: {sayi} proje")
 
 print()
 print("=" * 45)

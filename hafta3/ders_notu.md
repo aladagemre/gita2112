@@ -1,4 +1,4 @@
-# GİTA 2112 — Hafta 3: Listeler, Döngüler, Demetler ve Sözlükler
+# GİTA 2112 — Hafta 3: Listeler, Döngüler ve Demetler
 
 > Bu belge, derste anlatılan konuların yazılı özetidir.
 > Her bölümün sonunda ilgili kod dosyasına yönlendirme bulunur.
@@ -382,130 +382,12 @@ print(boyutlar[1])   # 1080
 
 ---
 
-## 7. Sözlükler — Anahtar ile Değer Eşleştirme
-
-### Sorun
-
-Bir öğrencinin bilgilerini saklamak istiyorsunuz: adı, bölümü, sınıfı, ortalaması. Ayrı ayrı değişkenler kullanabilirsiniz:
-
-```python
-isim = "Defne"
-bolum = "Grafik Tasarım"
-sinif = 2
-ortalama = 3.45
-```
-
-Ama bu bilgiler **birbirine ait**. Hepsi aynı öğrenciyle ilgili. Ayrı değişkenlerde tutunca aralarındaki bağlantı kaybolur. İkinci bir öğrenci eklemek istesek `isim2`, `bolum2`... mı yazacağız?
-
-### Çözüm: Sözlük
-
-Sözlük, bilgileri **anahtar-değer çiftleri** olarak saklar. Her bilgiye bir isim (anahtar) verirsiniz ve o isimle erişirsiniz:
-
-```python
-ogrenci = {
-    "isim": "Defne",
-    "bolum": "Grafik Tasarım",
-    "sinif": 2,
-    "ortalama": 3.45
-}
-```
-
-Süslü parantez `{}` kullanılır. Her satırda `"anahtar": değer` formatı vardır.
-
-### Değere Erişim
-
-Anahtarı köşeli parantez içinde yazarak değere ulaşırız:
-
-```python
-print(ogrenci["isim"])       # Defne
-print(ogrenci["bolum"])      # Grafik Tasarım
-print(ogrenci["ortalama"])   # 3.45
-```
-
-Listelerde `[0]`, `[1]` gibi sayı kullanıyorduk. Sözlüklerde ise `["isim"]`, `["bolum"]` gibi **anlamlı isimler** kullanıyoruz. Bu, kodu çok daha okunabilir kılar.
-
-### Değer Güncelleme ve Yeni Alan Ekleme
-
-Mevcut bir değeri değiştirmek:
-
-```python
-ogrenci["ortalama"] = 3.60
-```
-
-Yeni bir bilgi eklemek:
-
-```python
-ogrenci["email"] = "defne@uni.edu.tr"
-```
-
-Her iki işlem de aynı yazılışla yapılır. Anahtar zaten varsa günceller, yoksa yeni ekler.
-
-### Sözlük Üzerinde Döngü
-
-`.items()` metodu ile hem anahtarı hem değeri alarak gezeriz:
-
-```python
-for anahtar, deger in ogrenci.items():
-    print(anahtar + ":", deger)
-```
-
-Yukarıdaki tüm değişiklikleri (güncelleme + email ekleme) yaptıktan sonra bu döngü şöyle bir çıktı verir:
-
-```
-isim: Defne
-bolum: Grafik Tasarım
-sinif: 2
-ortalama: 3.6
-email: defne@uni.edu.tr
-```
-
-### Sözlük Listesi: Gerçek Hayatta En Çok Kullanılan Yapı
-
-Birden fazla öğrenciyi saklamak istiyorsak, her öğrenci bir sözlük olur ve hepsini bir listede tutarız:
-
-```python
-sinif = [
-    {"isim": "Defne", "puan": 88},
-    {"isim": "Cem", "puan": 72},
-    {"isim": "Ayşe", "puan": 95},
-]
-
-for ogr in sinif:
-    print(ogr["isim"], "→", ogr["puan"])
-```
-
-Bu yapı ileride çok karşınıza çıkacak. Bir veritabanı tablosu, bir Excel dosyası, bir API yanıtı — hepsi aslında bu mantıkla çalışır: **sözlüklerden oluşan bir liste**.
-
-> **Dosya:** `ornekler/07_sozlukler.py`
-
----
-
-## 8. Hepsini Bir Araya Getirme
-
-Son dosyamızda (`ornekler/08_hepsi_bir_arada.py`) bu haftanın tüm konularını birleştiren bir mini uygulama var: **Portfolyo Yöneticisi**.
-
-Bu uygulama şunları yapıyor:
-
-1. **Sözlük listesi** — Her proje bir sözlük (ad, kategori, puan), hepsi bir listede
-2. **enumerate + for** — Projeleri numaralı olarak listeleme
-3. **Toplam ve ortalama** — Döngüyle puan toplama, `round()` ile yuvarlama
-4. **En iyi projeyi bulma** — Döngüyle karşılaştırma
-5. **Kategoriye göre filtreleme** — Döngü + if ile eşleşenleri bulma
-6. **Kategori sayma** — Boş sözlük oluşturup dinamik olarak doldurma
-
-Bu dosyayı açıp satır satır okuyun. Her bölümün üstünde ne yaptığını anlatan yorumlar var. Anlamadığınız bir satır olursa, o konunun ders dosyasına geri dönüp tekrar bakın.
-
-> **Dosya:** `ornekler/08_hepsi_bir_arada.py`
-
----
-
 ## Özet Tablosu
 
 | Yapı | Yazılış | Ne İşe Yarar? | Örnek |
 |------|---------|---------------|-------|
 | Liste | `[]` | Birden fazla değeri sıralı tutar | `["kırmızı", "mavi"]` |
 | Demet | `()` | Sabit değerleri tutar (değiştirilemez) | `(255, 0, 0)` |
-| Sözlük | `{}` | Anahtar-değer çiftleri tutar | `{"isim": "Defne"}` |
 | for + range | `for i in range(n):` | Belirli sayıda tekrar | `for i in range(10):` |
 | for + liste | `for x in liste:` | Liste elemanlarını gezme | `for renk in renkler:` |
 | while | `while koşul:` | Koşul sağlandığı sürece tekrar | `while sayac > 0:` |
@@ -543,16 +425,7 @@ while sayac > 0:
 
 Sonsuz döngüye girerseniz `Ctrl+C` ile durdurun.
 
-### 4. Sözlükte olmayan anahtara erişmek
-
-```python
-ogrenci = {"isim": "Defne"}
-print(ogrenci["bolum"])   # KeyError! "bolum" anahtarı yok
-```
-
-Hata mesajında `KeyError` görürseniz, anahtar adını kontrol edin.
-
-### 5. Demeti değiştirmeye çalışmak
+### 4. Demeti değiştirmeye çalışmak
 
 ```python
 renk = (255, 0, 0)
@@ -565,7 +438,7 @@ Değiştirmeniz gerekiyorsa demet yerine liste kullanın.
 
 ## Ödevler Hakkında
 
-Bu haftanın 6 ödevi var. Kolaydan zora doğru sıralanmıştır:
+Bu haftanın 4 ödevi var. Kolaydan zora doğru sıralanmıştır:
 
 | Ödev | Zorluk | Konu |
 |------|--------|------|
@@ -573,8 +446,6 @@ Bu haftanın 6 ödevi var. Kolaydan zora doğru sıralanmıştır:
 | Ödev 2 — Katman Oluşturucu | Kolay | for + range() |
 | Ödev 3 — Renk Paleti Analizi | Orta | for + liste + if |
 | Ödev 4 — Renk Tahmin Oyunu | Orta-Zor | while True + break |
-| Ödev 5 — Proje Kartı | Orta-Zor | Sözlük işlemleri |
-| Ödev 6 — Sınıf Listesi Analizi | Zor | Hepsi bir arada |
 
 Her ödev dosyasında `...` ile işaretlenmiş yerler var. Bu yerler sizin doldurmanız gereken boşluklar. Yanlarındaki `# ←` yorumları size ne yazmanız gerektiğini söyler. Dosyanın en altındaki **Beklenen Çıktı** bölümüyle kendi çıktınızı karşılaştırın.
 
@@ -584,7 +455,7 @@ Tüm ödevler `hafta3/odevler/` klasöründedir. Nasıl çalıştırılacağı `
 
 ## Bir Sonraki Adım
 
-Bu hafta öğrendiğiniz listeler, döngüler ve sözlükler, Python programlamanın temel yapı taşlarıdır. Bundan sonraki hemen her konuda bu yapıları kullanacaksınız.
+Bu hafta öğrendiğiniz listeler, döngüler ve demetler, Python programlamanın temel yapı taşlarıdır. Gelecek hafta bu yapıların üzerine **sözlükler**, **f-string formatlama**, **continue**, **matematik işlemleri** ve daha fazlasını ekleyeceğiz.
 
 Konuları tam kavramak için:
 

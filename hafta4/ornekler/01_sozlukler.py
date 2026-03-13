@@ -1,5 +1,5 @@
 # =============================================================
-# DERS 7: Sözlükler (Dictionaries)
+# DERS 1: Sözlükler (Dictionaries)
 # =============================================================
 # Bu derste öğreneceğiz:
 #   - Sözlük oluşturma {anahtar: değer}

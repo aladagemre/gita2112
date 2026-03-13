@@ -27,8 +27,6 @@ Diğer ödevler için dosya adını değiştirin:
 python3 odev02_for_range.py
 python3 odev03_for_liste.py
 python3 odev04_while.py
-python3 odev05_sozluk.py
-python3 odev06_birlesik.py
 ```
 
 > **Not:** `input()` kullanan ödevlerde (Ödev 4) program sizden bilgi girmenizi bekler. Terminale yazıp Enter'a basın.
@@ -100,39 +98,6 @@ while True:
 
 ---
 
-## Ödev 5 — Proje Kartı (`odev05_sozluk.py`)
-
-Sözlük oluştur, değer oku/ekle/güncelle, döngüyle yazdır.
-
-```python
-proje = {"ad": "Logo Tasarımı", "kategori": "Kurumsal"}
-proje["puan"] = 88                  # yeni alan ekle
-proje["sure_gun"] = proje["sure_gun"] + 7  # güncelle
-
-for anahtar, deger in proje.items():
-    print(anahtar + ":", deger)
-```
-
----
-
-## Ödev 6 — Sınıf Listesi Analizi (`odev06_birlesik.py`) ⭐ Zor
-
-Liste + sözlük + döngü + if hepsini bir arada kullan.
-
-```python
-# Ortalama hesapla
-for ogr in ogrenciler:
-    toplam = toplam + ogr["puan"]
-
-# En iyiyi bul
-en_iyi = ogrenciler[0]
-for ogr in ogrenciler:
-    if ogr["puan"] > en_iyi["puan"]:
-        en_iyi = ogr
-```
-
----
-
 ## Genel İpuçları
 
 | Durum | Ne yapmalısın? |
@@ -140,6 +105,5 @@ for ogr in ogrenciler:
 | `...` yerine ne yazacağını bilmiyorsan | Dosyadaki `# ←` ipuçlarını oku |
 | `Ellipsis` çıktısı aldıysan | `...` yerine değişken/ifade yazmayı unuttun |
 | Sonsuz döngüye girdiysen | `Ctrl+C` ile durdur, sayacı kontrol et |
-| `KeyError` hatası aldıysan | Sözlük anahtarını kontrol et (yazım hatası?) |
 | `IndexError` hatası aldıysan | İndeks numarasını kontrol et (`len()` ile) |
 | Program hata verdi | Hata mesajının altındaki satır numarasına bak |
