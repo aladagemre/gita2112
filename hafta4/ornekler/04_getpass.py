@@ -1,5 +1,5 @@
 # =============================================================
-# DERS 6 (Bonus): Şifre Girişi — getpass
+# DERS 4 (Bonus): Şifre Girişi — getpass
 # =============================================================
 # Bu derste öğreneceğiz:
 #   - getpass modülünü kullanma

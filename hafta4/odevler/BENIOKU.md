@@ -9,7 +9,7 @@ Her ödev dosyasını bir kod editöründe aç, `...` ile işaretli yerleri dold
 ### Yöntem 1 — VS Code ile (Önerilen)
 
 1. Ödev dosyasını VS Code'da açın (örnek: `odev01_sozluk.py`)
-2. Sağ üstteki **▶ Run** düğmesine tıklayın
+2. Sağ üstteki **Run** düğmesine tıklayın
 3. Çıktı altta **Terminal** panelinde görünür
 
 ### Yöntem 2 — Terminal ile
@@ -25,12 +25,10 @@ Diğer ödevler için dosya adını değiştirin:
 
 ```
 python3 odev02_break_continue.py
-python3 odev03_fstring.py
-python3 odev04_hesap_makinesi.py
-python3 odev05_birlesik.py
+python3 odev03_birlesik.py
 ```
 
-> **Not:** `input()` kullanan ödevlerde (Ödev 2 Görev 3, Ödev 4) program sizden bilgi girmenizi bekler. Terminale yazıp Enter'a basın.
+> **Not:** `input()` kullanan ödevlerde (Ödev 2 Görev 3) program sizden bilgi girmenizi bekler. Terminale yazıp Enter'a basın.
 
 ---
 
@@ -71,40 +69,15 @@ if len(renk) < 5:
 
 ---
 
-## Ödev 3 — Tasarımcı Kartı v2 (`odev03_fstring.py`)
+## Ödev 3 — Tasarım Ekibi Analizi (`odev03_birlesik.py`) — Zor
 
-f-string ile formatlı yazdır, sayı formatla, string metodları kullan.
-
-```python
-print(f"İsim: {isim}")
-print(f"Ortalama puan: {ortalama_puan:.1f}")
-print(f"Büyük harf: {kirli_metin.strip().upper()}")
-```
-
----
-
-## Ödev 4 — Tasarım Hesap Makinesi (`odev04_hesap_makinesi.py`)
-
-input + float + if/elif + f-string ile hesap makinesi yap.
+Liste + sözlük + döngü + if + continue hepsini bir arada kullan.
 
 ```python
-sayi1 = float(input("Birinci sayı: "))
-if islem == "+":
-    sonuc = sayi1 + sayi2
-print(f"Sonuç: {sayi1} {islem} {sayi2} = {sonuc:.2f}")
-```
+for sira, t in enumerate(tasarimcilar, start=1):
+    print(str(sira) + ".", t["isim"], "→", t["puan"], "puan")
 
----
-
-## Ödev 5 — Sınıf Listesi Analizi (`odev05_birlesik.py`) — Zor
-
-Liste + sözlük + döngü + if + f-string + continue hepsini bir arada kullan.
-
-```python
-for sira, ogr in enumerate(ogrenciler, start=1):
-    print(f"{sira}. {ogr['isim']} ({ogr['bolum']}) → {ogr['puan']} puan")
-
-if ogr["puan"] < 75:
+if t["puan"] < 75:
     continue
 ```
 
@@ -118,5 +91,4 @@ if ogr["puan"] < 75:
 | `Ellipsis` çıktısı aldıysan | `...` yerine değişken/ifade yazmayı unuttun |
 | Sonsuz döngüye girdiysen | `Ctrl+C` ile durdur, break kontrolünü kontrol et |
 | `KeyError` hatası aldıysan | Sözlük anahtarını kontrol et (yazım hatası?) |
-| `ValueError` hatası aldıysan | float() veya int() dönüşümünde geçersiz giriş |
 | Program hata verdi | Hata mesajının altındaki satır numarasına bak |

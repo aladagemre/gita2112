@@ -1,4 +1,4 @@
-# GİTA 2112 — Hafta 4: Sözlükler, Break/Continue, F-String, Matematik
+# GİTA 2112 — Hafta 4: Sözlükler ve Break/Continue
 
 > Bu belge, derste anlatılan konuların yazılı özetidir.
 > Her bölümün sonunda ilgili kod dosyasına yönlendirme bulunur.
@@ -15,7 +15,7 @@ Geçen hafta şunları öğrenmiştik:
 - **while döngüsü** ile koşula bağlı tekrar
 - **Demetler** ile sabit verileri (RGB, koordinat) korumak
 
-Bu hafta bu bilgilerin üstüne yeni araçlar ekleyeceğiz: sözlükler, döngü kontrolü, string formatlama ve matematik işlemleri.
+Bu hafta bu bilgilerin üstüne yeni araçlar ekleyeceğiz: sözlükler ve döngü kontrolü.
 
 ---
 
@@ -174,183 +174,26 @@ print("Toplam", len(malzemeler), "malzeme:", malzemeler)
 
 ---
 
-## 3. String Formatlama — f-string
+## 3. Hepsini Bir Araya Getirme
 
-### Eski Yol: + ile Birleştirme
-
-Şimdiye kadar metinleri `+` ile birleştiriyorduk. Bu yöntemde sayıları `str()` ile çevirmek gerekiyordu:
-
-```python
-isim = "Defne"
-yas = 20
-print("Merhaba, ben " + isim + ". " + str(yas) + " yaşındayım.")
-```
-
-Bu hem uzun hem de hata yapmaya açık.
-
-### Yeni Yol: f-string
-
-`f"..."` ile başlayan bir string içinde süslü parantez `{}` kullanarak doğrudan değişken yazabiliriz:
-
-```python
-print(f"Merhaba, ben {isim}. {yas} yaşındayım.")
-```
-
-Daha kısa, daha okunabilir. Ayrıca `str()` çevirmesine gerek yok — f-string otomatik halleder.
-
-### f-string İçinde İfade
-
-Süslü parantezlerin içine sadece değişken değil, **ifadeler** de yazabilirsiniz:
-
-```python
-print(f"Toplam: {3 + 5}")              # 8
-print(f"İsim (büyük): {isim.upper()}")  # DEFNE
-print(f"5 yıl sonra: {yas + 5}")        # 25
-```
-
-### Sayı Formatlama
-
-f-string ile sayıları istediğiniz formatta gösterebilirsiniz:
-
-```python
-fiyat = 1234.5678
-
-print(f"{fiyat:.1f}")      # 1234.6    (1 ondalık basamak)
-print(f"{fiyat:.2f}")      # 1234.57   (2 ondalık basamak)
-print(f"{fiyat:,.2f}")     # 1,234.57  (binlik ayıracı + 2 ondalık)
-```
-
-| Format | Açıklama | Örnek |
-|--------|----------|-------|
-| `:.1f` | 1 ondalık basamak | `3.1` |
-| `:.2f` | 2 ondalık basamak | `3.14` |
-| `:,.2f` | Binlik ayıracı + 2 ondalık | `1,234.57` |
-
-### .format() Yöntemi (Farkındalık)
-
-f-string'den önce `.format()` yöntemi kullanılıyordu. Bilmenize gerek yok ama başkasının kodunda karşılaşabilirsiniz:
-
-```python
-print("Merhaba, ben {}. {} yaşındayım.".format(isim, yas))
-```
-
-### String Metodları
-
-Kullanıcıdan `input()` ile veri alırken bu metodlar çok işe yarar:
-
-```python
-metin = "  Grafik Tasarım  "
-metin.strip()       # "Grafik Tasarım"  (baş/son boşlukları siler)
-metin.lower()       # "  grafik tasarım  "  (küçük harfe çevirir)
-metin.upper()       # "  GRAFİK TASARIM  "  (büyük harfe çevirir)
-```
-
-Bunları zincirleme kullanabilirsiniz: `metin.strip().lower()` → `"grafik tasarım"`
-
-Pratik kullanım — kullanıcı "EVET", "evet", " evet " yazsa bile hepsini yakalarız:
-
-```python
-cevap = input("Devam? ").strip().lower()
-if cevap == "evet":
-    print("Devam ediyoruz!")
-```
-
-> **Dosya:** `ornekler/03_fstring.py`
-
----
-
-## 4. Matematik İşlemleri ve Tip Dönüşümleri
-
-### Aritmetik Operatörler
-
-Python'daki tüm matematik operatörleri:
-
-| Operatör | Açıklama | Örnek | Sonuç |
-|----------|----------|-------|-------|
-| `+` | Toplama | `17 + 5` | `22` |
-| `-` | Çıkarma | `17 - 5` | `12` |
-| `*` | Çarpma | `17 * 5` | `85` |
-| `/` | Bölme | `17 / 5` | `3.4` |
-| `//` | Tam bölme | `17 // 5` | `3` |
-| `%` | Mod (kalan) | `17 % 5` | `2` |
-| `**` | Üs alma | `2 ** 3` | `8` |
-
-**Önemli:** `/` her zaman ondalıklı sonuç (`float`) döner. Tam sayı sonuç istiyorsanız `//` kullanın.
-
-### Kısayol Operatörler
-
-Bir değişkeni kendi değeri üzerinden güncellemek için kısayollar:
-
-```python
-sayac = 10
-sayac += 3    # sayac = sayac + 3  → 13
-sayac -= 5    # sayac = sayac - 5  → 8
-sayac *= 2    # sayac = sayac * 2  → 16
-```
-
-### Tip Dönüşümleri: int() ve float()
-
-`input()` fonksiyonu her zaman **string** döner. Sayıyla işlem yapmak için dönüştürmeliyiz:
-
-```python
-yas = int(input("Yaşınız: "))      # string → tam sayı
-fiyat = float(input("Fiyat: "))    # string → ondalıklı sayı
-```
-
-**Dikkat:** `int()` ondalık kısmı **kırpar**, yuvarlamaz:
-
-```python
-int(3.7)    # 3  (yuvarlamaz!)
-int(3.2)    # 3
-```
-
-Yuvarlama istiyorsanız `round()` kullanın.
-
-### round() ve abs()
-
-```python
-round(3.14159, 2)   # 3.14  (virgülden sonra 2 basamak)
-round(3.14159, 1)   # 3.1
-round(3.14159)      # 3     (en yakın tam sayıya)
-
-abs(-15)    # 15  (mutlak değer — işareti atar)
-abs(7)      # 7
-```
-
-### Tasarım Bağlamı
-
-```python
-# Ekranı 3 sütuna bölelim
-genislik = 1920
-sutun_genislik = genislik // 3   # 640 (tam bölme)
-kalan = genislik % 3              # 0 (kalan piksel)
-```
-
-> **Dosya:** `ornekler/04_matematik.py`
-
----
-
-## 5. Hepsini Bir Araya Getirme
-
-Son dosyamızda (`ornekler/05_hepsi_bir_arada.py`) bu haftanın tüm konularını birleştiren bir mini uygulama var: **Portfolyo Yöneticisi**.
+Son dosyamızda (`ornekler/03_hepsi_bir_arada.py`) bu haftanın tüm konularını birleştiren bir mini uygulama var: **Proje Takip Sistemi**.
 
 Bu uygulama şunları yapıyor:
 
 1. **Sözlük listesi** — Her proje bir sözlük (ad, kategori, puan), hepsi bir listede
-2. **f-string ile listeleme** — `enumerate` + f-string ile formatlı yazdırma
-3. **continue ile filtreleme** — Düşük puanlı projeleri atlama
-4. **Toplam ve ortalama** — Döngüyle puan toplama, `:.1f` ile formatlama
-5. **En iyi projeyi bulma** — Döngüyle karşılaştırma
-6. **Kategoriye göre filtreleme** — Döngü + if ile eşleşenleri bulma
-7. **Kategori sayma** — Boş sözlük oluşturup dinamik olarak doldurma
+2. **continue ile filtreleme** — Düşük puanlı projeleri atlama
+3. **Toplam ve ortalama** — Döngüyle puan toplama
+4. **En iyi projeyi bulma** — Döngüyle karşılaştırma
+5. **Kategoriye göre filtreleme** — Döngü + if ile eşleşenleri bulma
+6. **Kategori sayma** — Boş sözlük oluşturup dinamik olarak doldurma
 
 Bu dosyayı açıp satır satır okuyun. Her bölümün üstünde ne yaptığını anlatan yorumlar var. Anlamadığınız bir satır olursa, o konunun ders dosyasına geri dönüp tekrar bakın.
 
-> **Dosya:** `ornekler/05_hepsi_bir_arada.py`
+> **Dosya:** `ornekler/03_hepsi_bir_arada.py`
 
 ---
 
-## 6. Bonus: getpass — Şifre Girişi
+## 4. Bonus: getpass — Şifre Girişi
 
 `getpass` modülü, `input()` gibi kullanıcıdan bilgi alır ama yazdığı karakterleri **ekranda göstermez**. Şifre girerken idealdir:
 
@@ -362,7 +205,7 @@ sifre = getpass("Şifre: ")
 
 Örnek dosyamızda kullanıcı adı + şifre kontrolü yapan, 3 deneme hakkı veren basit bir giriş sistemi var.
 
-> **Dosya:** `ornekler/06_getpass.py`
+> **Dosya:** `ornekler/04_getpass.py`
 
 ---
 
@@ -370,15 +213,10 @@ sifre = getpass("Şifre: ")
 
 | Yapı | Yazılış | Ne İşe Yarar? | Örnek |
 |------|---------|---------------|-------|
-| break | `break` | Döngüyü tamamen durdurur | `if buldum: break` |
-| continue | `continue` | Bu turu atlar, sonrakine geçer | `if puan < 50: continue` |
-| f-string | `f"..."` | Değişkeni metin içine gömer | `f"İsim: {isim}"` |
-| Sayı formatı | `:.1f` | Ondalık basamak kontrolü | `f"{puan:.1f}"` |
-| int() | `int(x)` | Tam sayıya çevirir (kırpar!) | `int("42")` → `42` |
-| float() | `float(x)` | Ondalıklı sayıya çevirir | `float("3.14")` → `3.14` |
-| round() | `round(x, n)` | Yuvarlar | `round(3.14, 1)` → `3.1` |
 | Sözlük | `{}` | Anahtar-değer çiftleri tutar | `{"isim": "Defne"}` |
 | .items() | `dict.items()` | Anahtar-değer çiftlerini döner | `for k, v in d.items():` |
+| break | `break` | Döngüyü tamamen durdurur | `if buldum: break` |
+| continue | `continue` | Bu turu atlar, sonrakine geçer | `if puan < 50: continue` |
 | getpass | `getpass("...")` | Gizli giriş alır | Şifre sorma |
 
 ---
@@ -401,22 +239,7 @@ for i in range(5):
     print(i)
 ```
 
-### 2. f-string'de f'yi unutmak
-
-```python
-isim = "Defne"
-print("{isim}")     # {isim}  ← f'yi unuttun!
-print(f"{isim}")    # Defne   ← doğru
-```
-
-### 3. int() kırpar, yuvarlamaz
-
-```python
-int(3.9)    # 3  ← 4 değil! Yuvarlamaz, kırpar.
-round(3.9)  # 4  ← Yuvarlama istiyorsan round() kullan
-```
-
-### 4. Sözlükte olmayan anahtara erişmek
+### 2. Sözlükte olmayan anahtara erişmek
 
 ```python
 ogrenci = {"isim": "Defne"}
@@ -425,27 +248,36 @@ print(ogrenci["bolum"])   # KeyError! "bolum" anahtarı yok
 
 Hata mesajında `KeyError` görürseniz, anahtar adını kontrol edin.
 
-### 5. input() her zaman string döner
+### 3. Sözlük anahtarında yazım hatası
 
 ```python
-sayi = input("Sayı: ")    # "5" (string!)
-print(sayi + 3)            # TypeError!
-print(int(sayi) + 3)       # 8 (doğru)
+ogrenci = {"isim": "Defne"}
+print(ogrenci["İsim"])   # KeyError! Büyük/küçük harf fark eder
+```
+
+### 4. Sözlük listesinde değere erişmek
+
+```python
+sinif = [{"isim": "Defne"}, {"isim": "Cem"}]
+
+# YANLIŞ:
+print(sinif["isim"])    # TypeError! sinif bir liste, sözlük değil
+
+# DOĞRU:
+print(sinif[0]["isim"])  # Defne — önce indeksle listeden al, sonra anahtarla sözlükten
 ```
 
 ---
 
 ## Ödevler Hakkında
 
-Bu haftanın 5 ödevi var. Kolaydan zora doğru sıralanmıştır:
+Bu haftanın 3 ödevi var. Kolaydan zora doğru sıralanmıştır:
 
 | Ödev | Zorluk | Konu |
 |------|--------|------|
 | Ödev 1 — Proje Kartı | Kolay-Orta | Sözlük işlemleri |
 | Ödev 2 — Renk Arama Asistanı | Kolay | for + break, for + continue |
-| Ödev 3 — Tasarımcı Kartı v2 | Kolay | f-string, sayı formatlama |
-| Ödev 4 — Tasarım Hesap Makinesi | Orta | input + float + if/elif + f-string |
-| Ödev 5 — Sınıf Listesi Analizi | Zor | Hepsi bir arada |
+| Ödev 3 — Tasarım Ekibi Analizi | Zor | Hepsi bir arada |
 
 Her ödev dosyasında `...` ile işaretlenmiş yerler var. Bu yerler sizin doldurmanız gereken boşluklar. Yanlarındaki `# ←` yorumları size ne yazmanız gerektiğini söyler. Dosyanın en altındaki **Beklenen Çıktı** bölümüyle kendi çıktınızı karşılaştırın.
 
@@ -455,7 +287,7 @@ Tüm ödevler `hafta4/odevler/` klasöründedir. Nasıl çalıştırılacağı `
 
 ## Bir Sonraki Adım
 
-Bu hafta öğrendiğiniz sözlükler, döngü kontrolü, f-string ve matematik işlemleri, Python programlamanın temel yapı taşlarıdır. Bundan sonraki hemen her konuda bu yapıları kullanacaksınız.
+Bu hafta öğrendiğiniz sözlükler ve döngü kontrolü, Python programlamanın temel yapı taşlarıdır. Gelecek hafta bu yapıların üzerine **f-string formatlama**, **matematik işlemleri** ve **tip dönüşümleri** ekleyeceğiz.
 
 Konuları tam kavramak için:
 
