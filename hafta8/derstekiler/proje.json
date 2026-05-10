@@ -1,0 +1,20 @@
+{
+    "ad": "Yeni Proje",
+    "tarih": "2026-06-15",
+    "tasarimci": "Defne Aydın",
+    "boyut": {
+        "en_cm": 50,
+        "boy_cm": 70
+    },
+    "renkler": [
+        "#FF6B6B",
+        "#1E3A8A",
+        "#FFD93D"
+    ],
+    "fontlar": [
+        "Inter",
+        "Playfair Display"
+    ],
+    "yayinlandi": false,
+    "notlar": "İlk taslak — geri bildirim bekleniyor."
+}

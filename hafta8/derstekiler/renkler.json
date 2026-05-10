@@ -1,0 +1,52 @@
+[
+    {
+        "isim": "Mercan",
+        "hex": "#FF6B6B",
+        "grup": "sıcak"
+    },
+    {
+        "isim": "Lacivert",
+        "hex": "#1E3A8A",
+        "grup": "soğuk"
+    },
+    {
+        "isim": "Sarı",
+        "hex": "#FFD93D",
+        "grup": "sıcak"
+    },
+    {
+        "isim": "Yeşil",
+        "hex": "#6BCB77",
+        "grup": "soğuk"
+    },
+    {
+        "isim": "Turuncu",
+        "hex": "#FF9F45",
+        "grup": "sıcak"
+    },
+    {
+        "isim": "Mor",
+        "hex": "#7B2CBF",
+        "grup": "soğuk"
+    },
+    {
+        "isim": "Bej",
+        "hex": "#E8DAB2",
+        "grup": "nötr"
+    },
+    {
+        "isim": "Kömür",
+        "hex": "#2B2D42",
+        "grup": "nötr"
+    },
+    {
+        "isim": "Pembe",
+        "hex": "#FFB4B4",
+        "grup": "sıcak"
+    },
+    {
+        "isim": "Turkuaz",
+        "hex": "#4ECDC4",
+        "grup": "soğuk"
+    }
+]
