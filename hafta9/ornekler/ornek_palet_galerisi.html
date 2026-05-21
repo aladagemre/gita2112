@@ -1,0 +1,147 @@
+<!--
+  Gemini tarafından üretildi — 22.05.2026
+  Prompt: 4 renk paletini gösteren HTML galeri sayfası. Her palette
+          renk bloğu + altında hex kodu. Beyaz arka plan, sistem fontu.
+  Bu dosya derste "Plan B" için hazır tutulan örnektir.
+-->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Renk Paleti Galerisi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #FFFFFF;
+      color: #1A1A1A;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 64px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 64px;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .alt {
+      color: #666;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .galeri {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+    }
+
+    .palet {
+      border: 1px solid #EEE;
+      padding: 24px;
+    }
+
+    .palet h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .palet .aciklama {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .renkler {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .renk {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .renk .blok {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 4px;
+    }
+
+    .renk .hex {
+      font-family: "SF Mono", Menlo, monospace;
+      font-size: 12px;
+      color: #444;
+      margin-top: 6px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Renk Paleti Galerisi</h1>
+    <p class="alt">Tasarım için biriktirdiğim referans paletler.</p>
+  </header>
+
+  <div class="galeri">
+
+    <div class="palet">
+      <h2>Yaz Sıcağı</h2>
+      <p class="aciklama">Mercan, sarı ve turuncu — enerjik kompozisyonlar için.</p>
+      <div class="renkler">
+        <div class="renk"><div class="blok" style="background:#FF6B6B"></div><div class="hex">#FF6B6B</div></div>
+        <div class="renk"><div class="blok" style="background:#FFD93D"></div><div class="hex">#FFD93D</div></div>
+        <div class="renk"><div class="blok" style="background:#FF8C42"></div><div class="hex">#FF8C42</div></div>
+        <div class="renk"><div class="blok" style="background:#E63946"></div><div class="hex">#E63946</div></div>
+      </div>
+    </div>
+
+    <div class="palet">
+      <h2>Kış Tonları</h2>
+      <p class="aciklama">Lacivertten açık maviye — kurumsal ve sakin işler.</p>
+      <div class="renkler">
+        <div class="renk"><div class="blok" style="background:#1E3A8A"></div><div class="hex">#1E3A8A</div></div>
+        <div class="renk"><div class="blok" style="background:#3B82F6"></div><div class="hex">#3B82F6</div></div>
+        <div class="renk"><div class="blok" style="background:#93C5FD"></div><div class="hex">#93C5FD</div></div>
+        <div class="renk"><div class="blok" style="background:#DBEAFE"></div><div class="hex">#DBEAFE</div></div>
+      </div>
+    </div>
+
+    <div class="palet">
+      <h2>Pastel Bahçe</h2>
+      <p class="aciklama">Yumuşak ve sıcak — afiş ve illüstrasyon için.</p>
+      <div class="renkler">
+        <div class="renk"><div class="blok" style="background:#FFB5A7"></div><div class="hex">#FFB5A7</div></div>
+        <div class="renk"><div class="blok" style="background:#FCD5CE"></div><div class="hex">#FCD5CE</div></div>
+        <div class="renk"><div class="blok" style="background:#F8EDEB"></div><div class="hex">#F8EDEB</div></div>
+        <div class="renk"><div class="blok" style="background:#F9DCC4"></div><div class="hex">#F9DCC4</div></div>
+      </div>
+    </div>
+
+    <div class="palet">
+      <h2>Gece Mavi</h2>
+      <p class="aciklama">Koyu ve dramatik — kitap kapağı ve poster için.</p>
+      <div class="renkler">
+        <div class="renk"><div class="blok" style="background:#22223B"></div><div class="hex">#22223B</div></div>
+        <div class="renk"><div class="blok" style="background:#4A4E69"></div><div class="hex">#4A4E69</div></div>
+        <div class="renk"><div class="blok" style="background:#9A8C98"></div><div class="hex">#9A8C98</div></div>
+        <div class="renk"><div class="blok" style="background:#C9ADA7"></div><div class="hex">#C9ADA7</div></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

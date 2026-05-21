@@ -1,0 +1,170 @@
+<!--
+  Gemini tarafından üretildi — 22.05.2026
+  Prompt: Kişisel portfolyo sayfası, isim Elif Yılmaz (VCD öğrencisi),
+          siyah arka plan, krem yazı, mercan vurgu, 3 proje kartı.
+  Bu dosya derste "Plan B" için hazır tutulan örnektir.
+-->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Elif Yılmaz — Portfolyo</title>
+  <style>
+    :root {
+      --bg: #0F0F0F;
+      --fg: #F5F5F5;
+      --accent: #FF6B6B;
+      --card: #1A1A1A;
+      --muted: #888888;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+      padding: 64px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 96px;
+      border-bottom: 1px solid var(--card);
+      padding-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .unvan {
+      color: var(--accent);
+      font-size: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    section {
+      margin-bottom: 80px;
+    }
+
+    h2 {
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .hakkimda p {
+      font-size: 20px;
+      max-width: 640px;
+      color: var(--fg);
+    }
+
+    .projeler {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .kart {
+      background: var(--card);
+      padding: 32px 24px;
+      border: 1px solid #222;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kart h3 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .kart .yil {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .kart .tip {
+      color: var(--accent);
+      font-size: 13px;
+      margin-top: 16px;
+    }
+
+    footer {
+      border-top: 1px solid var(--card);
+      padding-top: 32px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Elif Yılmaz</h1>
+    <p class="unvan">VCD Öğrencisi · Görsel Tasarımcı</p>
+  </header>
+
+  <section class="hakkimda">
+    <h2>Hakkımda</h2>
+    <p>
+      İstanbul'da yaşıyor ve okuyorum. Tasarım yaparken kompozisyon,
+      kağıt dokusu ve renk uyumuyla ilgileniyorum. Tipografi temelli
+      poster ve kitap kapağı işlerine ağırlık veriyorum.
+    </p>
+  </section>
+
+  <section>
+    <h2>Projeler</h2>
+    <div class="projeler">
+      <div class="kart">
+        <div>
+          <span class="yil">2026</span>
+          <h3>Caz Festivali Afişi</h3>
+        </div>
+        <span class="tip">Poster / Tipografi</span>
+      </div>
+
+      <div class="kart">
+        <div>
+          <span class="yil">2025</span>
+          <h3>Doğa Derneği Görsel Kimliği</h3>
+        </div>
+        <span class="tip">Kimlik / Logo</span>
+      </div>
+
+      <div class="kart">
+        <div>
+          <span class="yil">2025</span>
+          <h3>Kitap Kapağı Serisi</h3>
+        </div>
+        <span class="tip">Yayıncılık</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    elif.yilmaz@example.com · <a href="#">instagram</a> · <a href="#">behance</a>
+  </footer>
+</body>
+</html>
