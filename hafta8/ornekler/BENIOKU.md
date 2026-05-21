@@ -49,6 +49,12 @@ python3 07_json_islemleri.py
 | `07_json_islemleri.py` | `json.load`, `json.dump`, sözlük ↔ dosya | Evet |
 | `08_traceback_okuma.py` | 5 farklı hata tipini görme | Evet — hata verir, normal! |
 | `09_kod_okuma.py` | Kod okuma alıştırması | Evet — ama önce yorumları yazın |
+| `10_try_except_temel.py` | try/except/else/finally, çoklu hata yakalama | Evet |
+| `11_try_except_dosya.py` | FileNotFoundError yakalama, "yoksa varsayılan" deseni | Evet |
+| `12_try_except_kullanici.py` | input + int dönüşümü, while+try+break deseni | Evet |
+| `13_class_palet.py` | Palet sınıfı: `__init__`, 4 metot, çoklu nesne | Evet |
+| `14_class_ve_dosya.py` | Sınıf + to_dict + JSON kaydet/yükle + try/except | Evet |
+| `15_yabanci_kod_atolye.py` | 6 Gemini snippet — okuma + yorum alıştırması | Evet |
 
 ---
 

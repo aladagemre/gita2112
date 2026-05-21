@@ -761,11 +761,328 @@ Tüm ödevler `hafta8/odevler/` klasöründedir. `odevler/BENIOKU.md` dosyası n
 
 ---
 
+## Ek Bölümler: try/except ve Class
+
+Aşağıdaki bölümler vibecoding hazırlığı için kritik iki konuyu kapsar. Gemini'nin ürettiği kodun neredeyse tamamında bu iki yapı var — okuyup anlayabilmek için buradalar.
+
+---
+
+## Ek Bölüm 1 — try / except Temelleri
+
+### Hata Almak Normaldir
+
+Şimdiye kadar bir hata aldığınızda programınız çökerdi. Traceback gelir, kırmızı yazı görünür, program orada biter. **Bu hep böyle olmak zorunda değil.**
+
+Bazen biz **hata olabileceğini önceden biliyoruz** ve programın çökmesini istemiyoruz. Örneğin:
+
+- Kullanıcı bir sayı yerine "abc" yazabilir
+- Dosya o klasörde olmayabilir
+- İnternete bağlanılamayabilir
+
+Bu durumlarda Python'a "olur ki bir hata çıkarsa şunu yap" diyebiliriz. Bunun adı **try / except** bloğudur.
+
+### Tasarım Dünyasından Bir Benzetme
+
+InDesign'da bir belge açtığınızda "Missing fonts" uyarısı geldiğinde program kapanmaz. Bir diyalog kutusu açılır: "şu fontlar yok, ne yapmak istersin?" InDesign **hata aldı** ama **çökmedi** — sizinle konuştu.
+
+`try / except` aynı şey. "Bu kod çökerse, onu yakala ve şu davranışı göster." Bir tasarım yazılımının **hata diyaloğu** gibi.
+
+### En Basit Hali
+
+```python
+try:
+    sayi = int("mercan")          # Bu satır ValueError fırlatır
+    print("Çevirdim:", sayi)
+except ValueError:
+    print("Bu metin sayıya dönüşmüyor.")
+```
+
+Çıktı:
+```
+Bu metin sayıya dönüşmüyor.
+```
+
+İki blok var:
+
+- `try:` — "şunu denemek istiyorum" bloğu
+- `except ValueError:` — "eğer ValueError çıkarsa şunu yap" bloğu
+
+Eğer try bloğu sorunsuz biterse, except bloğu çalıştırılmaz. Eğer try bloğu hata fırlatırsa, Python derhal except bloğuna atlar.
+
+### Birden Fazla except Bloğu
+
+```python
+renkler = ["#FF6B6B", "#1E3A8A", "#FFD93D"]
+
+try:
+    secim = int("2")              # ValueError olasılığı
+    print("Renk:", renkler[secim]) # IndexError olasılığı
+except ValueError:
+    print("Geçerli bir sayı vermedin.")
+except IndexError:
+    print("Bu indekste renk yok.")
+```
+
+### else ve finally
+
+```python
+try:
+    deger = int("128")
+except ValueError:
+    print("Çevrim başarısız.")
+else:
+    print(f"Çevrim başarılı: {deger}")   # SADECE hata olmadıysa çalışır
+finally:
+    print("Bu satır HER DURUMDA çalışır.")
+```
+
+- `else` — try sorunsuz biterse çalışır
+- `finally` — hata olsun ya da olmasın çalışır (dosya kapatma gibi temizlik işleri için)
+
+### Hata Mesajını Yakalama
+
+```python
+try:
+    sonuc = 10 / 0
+except ZeroDivisionError as e:
+    print("Python ne diyor?:", e)
+# Çıktı: Python ne diyor?: division by zero
+```
+
+### Sık Yapılan Hatalar ↪ TypeError
+
+| Hata | Sebep | Çözüm |
+|---|---|---|
+| try bloğu hiç çalışmıyor | Yanlış girinti | İçeride en az bir satır olsun, doğru girintide |
+| except yakalanmıyor | Yanlış hata tipi yazdınız | Tracebackten doğru tipi okuyun |
+| Sadece `except:` yazmak | Çok geniş — sessizce bug'ları gizler | Spesifik tip yazın (`except ValueError`) |
+
+> ↪ **Vibecoding Bağlantısı:** Gemini size try/except'li bir kod verirse hangi hata tipini yakaladığını okuyabilmelisiniz.
+
+> **Dosya:** `ornekler/10_try_except_temel.py`
+
+---
+
+## Ek Bölüm 2 — try / except ile Dosya ve Kullanıcı Girişi
+
+### 2.1 Dosya İşlemleri — FileNotFoundError
+
+```python
+try:
+    with open("musteri_paleti.txt", "r", encoding="utf-8") as dosya:
+        icerik = dosya.read()
+    print(icerik)
+except FileNotFoundError:
+    print("Müşteri paleti dosyası yok. Varsayılan renklerle devam ediliyor.")
+```
+
+**EAFP felsefesi:** "Önce dosyayı kontrol et, varsa aç" yerine **doğrudan dene, hata olursa yakala**. Python'da bu deseni tercih ederiz.
+
+### "Yoksa Varsayılan" Deseni
+
+```python
+varsayilan_renkler = ["#000000", "#FFFFFF"]
+
+try:
+    with open("musteri.txt", "r", encoding="utf-8") as dosya:
+        renkler = [satir.strip() for satir in dosya]
+except FileNotFoundError:
+    renkler = varsayilan_renkler
+    print("Dosya yok, varsayılan siyah-beyaz kullanıldı.")
+```
+
+### 2.2 Kullanıcı Girdisi — ValueError
+
+```python
+ham = input("Bir RGB değeri gir (0-255): ")
+try:
+    deger = int(ham)
+    print("Geçerli:", deger)
+except ValueError:
+    print("Sayı bekliyordum, metin geldi.")
+```
+
+### "Geçerli Girdi Alana Kadar Sor" Deseni
+
+```python
+while True:
+    ham = input("Sayfa sayısı gir (>0): ")
+    try:
+        sayfa = int(ham)
+        if sayfa <= 0:
+            print("Sıfırdan büyük olmalı.")
+            continue
+        break                       # geçerli girdi — döngüden çık
+    except ValueError:
+        print("Sayı yazmalısın.")
+
+print(f"{sayfa} sayfa.")
+```
+
+> ↪ **Vibecoding Bağlantısı:** Gemini "kullanıcıdan sayı al" derken neredeyse her zaman bu `while True + try/except` desenini üretir.
+
+> **Dosyalar:** `ornekler/11_try_except_dosya.py`, `ornekler/12_try_except_kullanici.py`
+
+---
+
+## Ek Bölüm 3 — Sınıflar (class) Derinleşme
+
+### Hatırlatma
+
+Derste hızlıca `Dikdortgen` sınıfını görmüştük — hoca yazdı, siz izlediniz. Bu bölümde **siz yazacaksınız**.
+
+### Sınıf Nedir?
+
+Bir sınıf, **kendi veri tipinizi tasarlama** aracıdır. Python'da hazır tipler var: `int`, `str`, `list`, `dict`. Ama bazen kendinize özel bir tip lazım — bir `Palet`, bir `Renk`, bir `Font`, bir `Brif`.
+
+Sınıf bir **kalıp**tır. Bir poster mockup'ı düşünün — boş şablon. Gerçek poster yapmak için mockup'ı kopyalayıp içine içerik koyarsınız.
+
+- **Sınıf** = mockup (kalıp)
+- **Nesne (instance)** = mockup'tan üretilen gerçek poster
+
+```python
+class Palet:                       # ← Bu KALIP
+    def __init__(self, isim, renkler):
+        self.isim = isim
+        self.renkler = renkler
+
+# Kalıptan iki nesne yarat:
+sicak = Palet("Yaz", ["#FF6B6B", "#FFD93D"])
+soguk = Palet("Kış", ["#1E3A8A", "#3B82F6"])
+
+print(sicak.isim)         # Yaz
+print(soguk.isim)         # Kış
+```
+
+### `__init__` ve `self`
+
+`__init__` nesne yaratılırken otomatik çalışan **yapıcı (constructor)**dır. `self` her metodun ilk parametresidir — "bu nesnenin kendisi" demek. Çağırırken `self`'i **yazmazsınız**.
+
+### Tam Bir Örnek
+
+```python
+class Palet:
+    def __init__(self, isim: str, renkler: list):
+        self.isim = isim
+        self.renkler = renkler
+
+    def renk_ekle(self, renk: str):
+        self.renkler.append(renk)
+
+    def renk_sayisi(self) -> int:
+        return len(self.renkler)
+
+    def birincil(self) -> str:
+        return self.renkler[0]
+
+    def bilgi_ver(self):
+        print(f"Palet: {self.isim}")
+        print(f"  Renk sayısı: {self.renk_sayisi()}")
+        print(f"  Birincil renk: {self.birincil()}")
+
+
+sicak = Palet("Yaz Sıcağı", ["#FF6B6B", "#FFD93D", "#FF8C42"])
+sicak.renk_ekle("#E63946")
+sicak.bilgi_ver()
+```
+
+### Sınıf + JSON — Vibecoding'de En Çok Görülecek Desen
+
+```python
+import json
+
+class Palet:
+    def __init__(self, isim, renkler):
+        self.isim = isim
+        self.renkler = renkler
+
+    def to_dict(self):
+        return {"isim": self.isim, "renkler": self.renkler}
+
+# Kaydet
+orijinal = Palet("Bahar", ["#A8DADC", "#E63946"])
+
+try:
+    with open("palet.json", "w", encoding="utf-8") as dosya:
+        json.dump(orijinal.to_dict(), dosya, ensure_ascii=False, indent=2)
+except PermissionError:
+    print("Yazma izni yok.")
+
+# Geri yükle
+try:
+    with open("palet.json", "r", encoding="utf-8") as dosya:
+        sozluk = json.load(dosya)
+    geri_yuklenen = Palet(sozluk["isim"], sozluk["renkler"])
+    print(f"Yüklendi: {geri_yuklenen.isim}")
+except FileNotFoundError:
+    print("Palet dosyası yok.")
+```
+
+Dört şeyi birden kullanan tam vibecoding deseni: `class` + `to_dict()` + `json.dump/load` + `try/except`.
+
+### Sık Yapılan Hatalar ↪ AttributeError / TypeError
+
+| Hata | Sebep | Çözüm |
+|---|---|---|
+| `AttributeError: 'Palet' object has no attribute 'X'` | `__init__` içinde `self.X = ...` yazmayı unuttun | `__init__`'i kontrol et |
+| `TypeError: __init__() missing 1 required positional argument` | Nesne yaratırken parametre eksik | Tüm parametreleri ver |
+| `self.metot_adi()` yerine `metot_adi()` | `self.` unutuldu | Hep `self.` ile başlat |
+| Metoda `self` koymayı unutmak | `def alan():` yerine `def alan(self):` | Her metodun ilk parametresi `self` |
+
+> ↪ **Vibecoding Bağlantısı:** Gemini size "müşteri brifi yöneten bir sınıf yaz" diyene kadar 5 dakika sürmez. Onun `__init__`'ini okuyamazsanız sınıfı kullanamazsınız.
+
+> **Dosyalar:** `ornekler/13_class_palet.py`, `ornekler/14_class_ve_dosya.py`
+
+---
+
+## Ek Bölüm 4 — Yabancı Kod Okuma Atölyesi (Genişletilmiş)
+
+`ornekler/15_yabanci_kod_atolye.py` dosyasında 6 snippet var. Her birinin başında:
+
+```python
+# === SNIPPET X ===
+# Bu kodu Gemini verdi. Ne yapıyor?
+```
+
+Sınıfta yapacağınız: snippet'i okuyun → "ne yapar?" sorusunu cevaplayın → çalıştırın → doğrulayın.
+
+### Bu Snippetlerde Geçen Yapılar
+
+| Yapı | Nerede gördük? | Aktif/Pasif? |
+|---|---|---|
+| List comprehension | H8 | Pasif tanıma |
+| `try / except` | Ek Bölüm 1-2 | Aktif |
+| `class` | Ek Bölüm 3 | Aktif |
+| `sorted` + `lambda` | Bu bölüm | Pasif tanıma |
+| `requests.get()` | H8 | Hatırlama |
+| `if __name__ == "__main__":` | Bu bölüm | Pasif tanıma |
+
+### Yeni Pasif Yapılar — Sadece Tanıyın
+
+**`sorted` + `lambda`:**
+```python
+projeler = [{"ad": "A", "butce": 1000}, {"ad": "B", "butce": 5000}]
+sirali = sorted(projeler, key=lambda p: p["butce"], reverse=True)
+```
+`lambda` "tek satırlık adsız fonksiyon". Sadece okuyup "bütçeye göre sıralıyor" diyebilmeniz yeterli.
+
+**`if __name__ == "__main__":`:**
+```python
+def selamla(isim):
+    print(f"Merhaba {isim}")
+
+if __name__ == "__main__":
+    selamla("Defne")
+```
+"Bu dosya doğrudan çalıştırılırsa başlangıç noktası burası" demek. Şimdilik sadece tanıyın.
+
+> **Dosya:** `ornekler/15_yabanci_kod_atolye.py`
+
+---
+
 ## Bir Sonraki Adım
 
-Önümüzdeki hafta (Hafta 9) bu hafta öğrendiklerinizi pekiştireceğiz: gerçek bir tasarım veri seti üzerinde çalışacak, bir küçük "tasarım envanteri" projesi yapacağız. Sonraki hafta (Hafta 10) bir LLM (Gemini) ile birlikte vibecoding yapacağız — yani size yapay zekanın ürettiği koda komuta etmeyi öğreteceğiz.
-
-Bu haftayı atlatabilirseniz vibecoding'e hazırsınız. Çünkü vibecoding'in zorluğu kod yazmak değil — yapay zekanın yazdığı kodu **okuyup, çalıştırıp, hatalarını anlayıp, düzeltebilmek**. Yani tam da bu hafta öğrendiğiniz şey.
+Önümüzdeki hafta (Hafta 9) Gemini ile **vibecoding** yapacağız — yapay zekanın ürettiği koda komuta etmeyi öğreneceğiz.
 
 Konuları kavramak için:
 
