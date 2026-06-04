@@ -40,7 +40,7 @@ Ders sonunda öğrenci:
 | 10:00–10:15 | 15 | Defter alıştırması: kendi projeni parçala + kameraya göster |
 | 10:15–10:25 | 10 | Mola |
 | 10:25–11:15 | 50 | Atölye: herkes kendi aracını yapar |
-| 11:15–11:30 | 15 | Paylaşım + transfer + ödev |
+| 11:15–11:30 | 15 | Paylaşım + canlıya alma (surge) + ödev |
 
 ---
 
@@ -204,14 +204,25 @@ Türkçe karakterler doğru çıksın. SADECE 1. adımı yap, fazlasını ekleme
 
 ---
 
-## 7) Paylaşım + Transfer + Ödev (15 dk)
+## 7) Paylaşım + Canlıya Alma + Ödev (15 dk)
 
-**Paylaşım (8 dk):** 2-3 öğrenci ekranını paylaşsın — aracını + en az bir aşama belgesini göstersin. "Çekirdeğin neydi? Kaç katman ekledin?"
+**Paylaşım (5 dk):** 2-3 öğrenci ekranını paylaşsın — aracını + en az bir aşama belgesini göstersin. "Çekirdeğin neydi? Kaç katman ekledin?"
 
-**Transfer (4 dk):**
+**Canlıya alma — surge.sh (5 dk):** Hoca canlı gösterir. Antigravity'de terminali aç, projenin klasöründe:
+```
+npx surge
+```
+- İlk seferde e-posta + şifre sorar → ücretsiz hesap oluşur
+- Klasör sorar → `Enter`
+- Domain sorar → `adin-projen.surge.sh` → `Enter`
+- Link hazır → tarayıcıda aç, paylaş
+
+> Söyle: "Araç artık sadece sizde değil — herkes bu linke girip görebilir. Bu, portföyünüze koyacağınız gerçek bir eser." Öğrenci kendi deploy'unu **ödevde** yapacak.
+
+**Transfer (3 dk):**
 > "Bugün paleti yaptık ama asıl öğrendiğiniz **5 aşama**. Aynı aşamalar bir poster jeneratörüne, kişisel sitenize, bir quize de uyar. Önce planla, sonra kodlat."
 
-**Ödev (3 dk):** Aşağıdaki bölümü göster.
+**Ödev (2 dk):** Aşağıdaki bölümü göster. (Slaytların sonundaki **20 proje fikri** listesini de göster — herkes seviyesine uygun birini seçebilir.)
 
 ---
 
@@ -223,6 +234,7 @@ Kendi projeni **5 aşamadan** baştan sona geçir.
 - `fikir.md`, `gereksinim.md`, `tasarim.md`, `yol-haritasi.md` — 4 aşama belgesi (Antigravity üretecek, kaydet)
 - `index.html` — çalışan aracın
 - `notlar.txt` — her aşamada ne istedin, ne değişti
+- **Bonus:** aracını `surge.sh` ile canlıya al → linkini `notlar.txt`'e ekle
 
 ### Değerlendirme
 Kod kalitesi **değil** →

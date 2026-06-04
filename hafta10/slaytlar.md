@@ -247,6 +247,46 @@ söz/alıntı kartı · emoji ruh hali panosu · kişisel link sayfası · geri 
 
 -----
 
+## Canlıya Al — surge.sh
+
+Araç bilgisayarında kaldıkça **kimse göremez.**
+
+**surge.sh** = ücretsiz; statik siteni saniyeler içinde
+internete koyar ve **paylaşılabilir bir link** verir.
+
+> Portfolyona, CV'ne, Instagram bio'na koyabilirsin
+
+-----
+
+## surge.sh — Adımlar
+
+Antigravity'de **terminali** aç, projenin klasöründe yaz:
+
+```
+npx surge
+```
+
+1. İlk seferde **e-posta + şifre** sorar → ücretsiz hesap oluşur
+2. **Klasör** sorar → `Enter` (mevcut klasör)
+3. **Domain** sorar → `adin-projen.surge.sh` yaz → `Enter`
+4. Bitti 🎉 → linkin hazır
+
+> `index.html` klasörün içinde olmalı
+
+-----
+
+## Güncelleme & Paylaşım
+
+**Değişiklik yaptın mı?**
+Tekrar `npx surge` çalıştır — aynı linke yeni hâli yüklenir.
+
+**Linkini paylaş:**
+`https://adin-projen.surge.sh`
+
+> Artık elinde gerçek, paylaşılabilir bir **eser** var
+
+-----
+
 ## Bugün Ne Yapacağız?
 
 | Süre | Adım |
@@ -257,7 +297,7 @@ söz/alıntı kartı · emoji ruh hali panosu · kişisel link sayfası · geri 
 | 15 dk | Defterde kendi projeni parçala |
 | 10 dk | Mola |
 | 50 dk | Kendi aracını yap |
-| 15 dk | Paylaşım + ödev |
+| 15 dk | Paylaşım + canlıya alma (surge) + ödev |
 
 -----
 
@@ -285,6 +325,7 @@ Kendi projeni **5 aşamadan** baştan sona geçir.
 - `fikir.md`, `gereksinim.md`, `tasarim.md`, `yol-haritasi.md`
 - `index.html` — çalışan aracın
 - `notlar.txt` — her aşamada ne istedin, ne değişti
+- **Bonus:** aracını `surge.sh` ile canlıya al → linkini `notlar.txt`'e ekle
 
 ### Değerlendirme
 Kod kalitesi değil →
@@ -296,11 +337,65 @@ Kod kalitesi değil →
 
 ## Bir Sonraki Adım
 
-Bu hafta bir proje **geliştirmeyi** öğrendiniz.
+Bu hafta: planladınız → kodlattınız → **canlıya aldınız.**
 
 Önümüzdeki hafta (son hafta):
 
-- Aracınızı **canlıya alma** — paylaşılabilir bir link
-- **Portfolyonuza** koyma
+- Tüm araçlarınızı **bir portfolyoda** toplama
+- Cilalama + sunum
 
-> "Plan yaptınız, kodlattınız, araç çıktı. Şimdi onu dünyaya açacağız."
+> "Artık paylaşılabilir eserleriniz var. Son hafta hepsini bir vitrine koyacağız."
+
+-----
+
+## 20 Proje Fikri
+
+### GİTA Öğrencileri İçin
+
+Hepsi **tam frontend** — aynı 5 aşamayla yapılabilir.
+Seviyene göre seç.
+
+-----
+
+## Kolay — Küçük Çekirdek
+
+1. **Kişisel link sayfası** — tüm hesapların tek sayfada (Linktree gibi)
+2. **Dijital kartvizit** — ad, unvan, iletişim; paylaşılabilir
+3. **Alıntı/söz kartı üreteci** — güzel tipografiyle rastgele söz
+4. **Geri sayım sayfası** — sergi açılışı / teslim tarihi
+5. **Emoji ruh hali panosu** — günün hâlini seç
+6. **"Bugünün rengi"** — her açılışta renk + hex + isim
+
+-----
+
+## Orta
+
+7. **Renk paleti üreteci** — (bugünkü örnek)
+8. **Gradyan üreteci** — 2 renk → degrade + CSS kodu
+9. **Tipografi eşleştirici** — başlık + gövde font çiftleri
+10. **Mood board** — görsel + renk ızgarası
+11. **Sosyal medya şablonu** — kare gönderi önizleyici
+12. **CSS filtre oyun alanı** — fotoğrafa filtre uygula, kodu al
+13. **Before/After kaydırıcı** — iki görseli karşılaştır
+14. **Etkinlik/sergi davetiyesi** — tek sayfa, şık
+
+-----
+
+## İleri
+
+15. **Kişisel portfolyo** — projeler + hakkımda + iletişim
+16. **Poster/afiş jeneratörü** — rastgele geometrik kompozisyon
+17. **Renk kontrast denetleyici** — iki renk okunur mu? (erişilebilirlik)
+18. **Desen (pattern) üreteci** — tekrar eden desen → indir
+19. **Logo/monogram denemesi** — baş harfler + font + renk
+20. **Renk teorisi quiz'i** — eğlenceli mini test
+
+-----
+
+## Unutma
+
+> Hangi projeyi seçersen seç:
+>
+> **Fikir → Gereksinim → Tasarım → Yol Haritası → Kodlat**
+>
+> Önce çekirdek, sonra katman katman, en son **canlıya al**.
