@@ -17,6 +17,18 @@
 
 -----
 
+## Önce: Ders Değerlendirme Anketleri 📋
+
+Dönem sonu **ders değerlendirme anketleri** açıldı.
+
+- Lütfen doldurmayı unutmayın
+- Birkaç dakikanızı alır
+- Geri bildiriminiz dersin gelişmesine **doğrudan** katkı sağlar
+
+> Dürüst geri bildirim en değerlisi — teşekkürler
+
+-----
+
 ## Büyük Şeyler Tek Promptla Olmaz
 
 Bir profesyonel tek prompt yazmaz.

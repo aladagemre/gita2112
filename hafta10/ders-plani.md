@@ -54,6 +54,8 @@ Ders sonunda öğrenci:
 
 **Geçen haftayla köprü:** "Geçen hafta art director gibi tarif ettiniz. Bugün art director **projeyi planlıyor**: önce brief, sonra üretim."
 
+**Anket hatırlatması (giriş'ten hemen sonra, ~1 dk):** Dönem sonu ders değerlendirme anketlerini hatırlat — doldurmalarını rica et, geri bildirimin dersi geliştirdiğini vurgula. *(slaytı göster)*
+
 ---
 
 ## 2) 5 Aşama Yöntemi (15 dk)
