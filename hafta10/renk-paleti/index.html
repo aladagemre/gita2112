@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Colors - Tasarımcılar İçin Renk Paleti Üreteci</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#8B5CF6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern CSS Değişkenleri & Tasarım Sistemi */
+        :root {
+            --font-family: 'Outfit', sans-serif;
+            --bg-app: #0A0A0C;
+            --bg-panel: rgba(15, 15, 18, 0.75);
+            --border-panel: rgba(255, 255, 255, 0.08);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.35);
+            --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+
+            --transition-speed: 0.5s;
+            --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Sıfırlama (Reset) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-app);
+            color: var(--text-primary);
+            min-block-size: 100dvb;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Üst Bölüm (Header) */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--bg-panel);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-panel);
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #A78BFA 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo span {
+            font-size: 1rem;
+            opacity: 0.8;
+            -webkit-text-fill-color: var(--text-primary);
+        }
+
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Butonlar */
+        .btn {
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.625rem 1.25rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-panel);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%);
+            border: none;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.45);
+            background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+        }
+
+        /* Renk Teorisi Seçim Menüsü */
+        .select-mode {
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.625rem 1.25rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-panel);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .select-mode:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .select-mode option {
+            background-color: #0F0F12;
+            color: var(--text-primary);
+        }
+
+        .keyboard-shortcut {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* Orta Bölüm (Ana Kanvas) */
+        .palette-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(var(--palette-size, 5), 1fr);
+            inline-size: 100%;
+            block-size: 100%;
+        }
+
+        /* Renk Kartı Düzeni */
+        .color-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 2.5rem 1rem;
+            position: relative;
+            transition: background-color var(--transition-speed) var(--transition-ease);
+        }
+
+        /* Renk Kartı İç Kontroller Paneli */
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(10, 10, 12, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-inline-size: 140px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .color-hex {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-primary);
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .color-hex:hover {
+            opacity: 0.8;
+        }
+
+        .card-status {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Kilit Butonu Stilleri */
+        .lock-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 2.25rem;
+            height: 2.25rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            margin-top: 0.25rem;
+        }
+
+        .lock-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.08);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Kart Kilitlendiğindeki Durum */
+        .color-card.is-locked .lock-btn {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+            color: #F59E0B;
+        }
+
+        /* Renk Seçici Butonu Stilleri */
+        .picker-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 2.25rem;
+            height: 2.25rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .picker-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.08);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Kart Butonları Gruplayıcı */
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+            align-items: center;
+        }
+
+        /* Kopyalama Bildirimi (Toast) */
+        .copy-toast {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(10, 10, 12, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 5;
+            letter-spacing: 0.02em;
+        }
+
+        .copy-toast.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Alt Bölüm (Footer) */
+        .app-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-panel);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-panel);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            z-index: 10;
+        }
+
+        .footer-tip {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* Yerel Kütüphane (Library Drawer) */
+        .library-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100vh;
+            background: rgba(15, 15, 18, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border-panel);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .library-drawer.open {
+            transform: translateX(0);
+        }
+
+        .library-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-panel);
+        }
+
+        .library-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #A78BFA 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-drawer-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+        }
+
+        .close-drawer-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .library-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Kaydedilen Palet Kartları */
+        .saved-palette-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-panel);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .saved-palette-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .saved-palette-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .saved-palette-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .saved-palette-colors {
+            display: flex;
+            height: 1.5rem;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .saved-palette-color-block {
+            flex: 1;
+            height: 100%;
+        }
+
+        .saved-palette-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .saved-palette-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-panel);
+            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .saved-palette-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .saved-palette-btn.delete {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+
+        .saved-palette-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .empty-library-msg {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            opacity: 0.6;
+        }
+
+        /* Overlay Arayüz Buğulama */
+        .library-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 95;
+            transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+        }
+
+        .library-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* Palet Kaydetme Modalı */
+        .save-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: rgba(15, 15, 18, 0.95);
+            border: 1px solid var(--border-panel);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            z-index: 150;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .save-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .save-modal h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .save-modal-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-panel);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .save-modal-input:focus {
+            border-color: #8B5CF6;
+        }
+
+        .save-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* Kontrast Rozeti Stilleri */
+        .contrast-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(10, 10, 12, 0.85);
+            color: var(--text-primary);
+            position: absolute;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .contrast-badge.fail {
+            color: #EF4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .contrast-badge.aa {
+            color: #F59E0B;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .contrast-badge.aaa {
+            color: #10B981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        /* Geçmiş (History) Buton Stilleri */
+        .btn-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.25 !important;
+            cursor: not-allowed !important;
+        }
+
+        /* Simülasyon Seçici (Footer) */
+        .footer-sim {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-select {
+            font-family: var(--font-family);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-panel);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .sim-select:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .sim-select option {
+            background-color: #0F0F12;
+            color: var(--text-primary);
+        }
+
+        /* Dışa Aktar Modalı & Sekmeler */
+        .export-modal {
+            max-width: 550px;
+        }
+
+        .export-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-panel);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .export-tab {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .export-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .export-tab.active {
+            color: #8B5CF6;
+            border-bottom-color: #8B5CF6;
+        }
+
+        .export-content {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-panel);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .export-tab-pane {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .export-tab-pane.active {
+            display: flex;
+        }
+
+        .export-tab-pane pre {
+            margin: 0;
+            overflow-x: auto;
+            max-height: 200px;
+        }
+
+        .export-tab-pane code {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #A78BFA;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .btn-copy-pane {
+            align-self: flex-end;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Erişilebilirlik Modal Tablosu */
+        .a11y-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .a11y-matrix-table th, .a11y-matrix-table td {
+            border: 1px solid var(--border-panel);
+            padding: 0.6rem;
+            text-align: center;
+        }
+
+        .a11y-matrix-table th {
+            background: rgba(255, 255, 255, 0.03);
+            font-weight: 600;
+        }
+
+        .a11y-cell-preview {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-right: 0.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .a11y-status-pill {
+            display: inline-block;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.7rem;
+        }
+
+        .a11y-status-pill.pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+        }
+
+        .a11y-status-pill.fail {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+        }
+
+        /* Mobil Responsive Uyum Kırılımı (CSS Grid / Flexbox Akışı) */
+        @media (max-width: 768px) {
+            .library-drawer {
+                width: 100%;
+            }
+            .palette-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(var(--palette-size, 5), 1fr);
+            }
+
+            .color-card {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                padding: 0.5rem 1rem !important;
+            }
+
+            .contrast-badge {
+                position: static !important;
+                transform: none !important;
+                font-size: 0.7rem !important;
+                padding: 0.2rem 0.4rem !important;
+            }
+
+            .card-delete-btn {
+                position: static !important;
+                order: 10 !important;
+                margin-left: 0.5rem !important;
+            }
+
+            .card-details {
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                flex: 1 !important;
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                padding: 0 !important;
+                width: auto !important;
+                min-inline-size: auto !important;
+            }
+
+            .card-status {
+                display: none !important;
+            }
+
+            .card-actions {
+                display: flex !important;
+                gap: 0.4rem !important;
+            }
+
+            .hsl-sliders-panel {
+                bottom: 100% !important;
+                margin-bottom: 0.5rem !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 180px !important;
+            }
+
+            .lock-btn, .picker-btn {
+                margin-top: 0;
+            }
+
+            .app-header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .controls-group {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .app-footer {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+                padding: 1rem;
+            }
+        }
+
+        /* Sürükle-Bırak Katmanı (Drag & Drop Overlay) */
+        .drag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 10, 12, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 4px dashed rgba(139, 92, 246, 0.6);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            pointer-events: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .drag-overlay.active {
+            display: flex;
+        }
+
+        /* Silme butonu (kartın sağ üstünde) */
+        .card-delete-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.125rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s ease, transform 0.2s ease;
+            z-index: 5;
+            opacity: 0.6;
+        }
+        .card-delete-btn:hover {
+            opacity: 1;
+            background: rgba(239, 68, 68, 0.15);
+            transform: scale(1.1);
+        }
+
+        /* HSL İnce Ayar Paneli */
+        .hsl-sliders-panel {
+            display: none;
+            flex-direction: column;
+            gap: 0.6rem;
+            background: rgba(15, 15, 18, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.85rem;
+            border-radius: 14px;
+            width: 160px;
+            position: absolute;
+            bottom: 6.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideUp {
+            from { transform: translate(-50%, 10px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            text-align: left;
+        }
+        .slider-group label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+        .slider-group span {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+        .hsl-range {
+            width: 100%;
+            accent-color: #8B5CF6;
+            cursor: pointer;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        /* Kütüphane Arama Kutusu */
+        .library-search-container {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-panel);
+            margin-bottom: 1rem;
+        }
+        .library-search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-panel);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .library-search-input:focus {
+            border-color: #8B5CF6;
+        }
+
+        /* Palet Etiket Rozetleri (Library'de kart altında) */
+        .saved-palette-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.25rem;
+        }
+        .palette-tag-badge {
+            background: rgba(139, 92, 246, 0.12);
+            color: #A78BFA;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        /* Sürüklenen Kart Görsel Efekti */
+        .color-card.dragging {
+            opacity: 0.4;
+            border: 2px dashed rgba(139, 92, 246, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ÜST BÖLÜM: Header ve Kontroller -->
+    <header class="app-header">
+        <h1 class="logo">
+            Antigravity Colors <span>🌟</span>
+        </h1>
+        <div class="controls-group">
+            <select class="select-mode" id="select-mode" aria-label="Renk Teorisi Şeması">
+                <option value="random">Rastgele (Uyumlu)</option>
+                <option value="monochromatic">Monokromatik</option>
+                <option value="analogous">Analog</option>
+                <option value="complementary">Tamamlayıcı</option>
+                <option value="triadic">Üçlü</option>
+            </select>
+            <button class="btn btn-primary" id="btn-generate">
+                Yeni Palet Üret <span class="keyboard-shortcut">Space</span>
+            </button>
+            <button class="btn" id="btn-add-color" title="Yeni Renk Ekle">
+                ➕ Renk Ekle
+            </button>
+            <button class="btn btn-icon" id="btn-undo" title="Geri (Cmd+Z)" disabled>↩</button>
+            <button class="btn btn-icon" id="btn-redo" title="İleri (Cmd+Y)" disabled>↪</button>
+            <button class="btn" id="btn-save">
+                💾 Kaydet
+            </button>
+            <button class="btn" id="btn-library">
+                📚 Kütüphanem (0)
+            </button>
+            <button class="btn" id="btn-upload">
+                📷 Görsel Yükle
+            </button>
+            <input type="file" id="image-input" accept="image/*" style="display: none;">
+            <button class="btn" id="btn-copy-css">
+                Dışa Aktar
+            </button>
+            <button class="btn" id="btn-a11y">
+                ♿ Erişilebilirlik
+            </button>
+        </div>
+    </header>
+
+    <!-- ORTA BÖLÜM: Renk Kartları (Kanvas) -->
+    <main class="palette-container" id="palette-container">
+        <!-- Kartlar JavaScript ile dinamik olarak oluşturulacaktır -->
+    </main>
+
+    <!-- ALT BÖLÜM: Bilgilendirme Çubuğu -->
+    <footer class="app-footer">
+        <div class="footer-tip">
+            <span>💡</span> Yeni renkler için Boşluk (Space) tuşuna basın, sabitlemek için kilide tıklayın.
+        </div>
+        <div class="footer-sim">
+            <span>👁️ Simülasyon:</span>
+            <select class="sim-select" id="select-sim" aria-label="Renk Körlüğü Simülasyonu">
+                <option value="none">Normal Görüş</option>
+                <option value="protanopia">Protanopi (Kırmızı Körlüğü)</option>
+                <option value="deuteranopia">Döteranopi (Yeşil Körlüğü)</option>
+                <option value="tritanopia">Tritanopi (Mavi Körlüğü)</option>
+                <option value="achromatopsia">Akromatopsi (Tam Renk Körlüğü)</option>
+            </select>
+        </div>
+        <div class="footer-status">
+            Erişilebilirlik Skoru: --
+        </div>
+    </footer>
+
+    <!-- Yerel Kütüphane Yan Panel (Drawer) -->
+    <div class="library-overlay" id="library-overlay"></div>
+    <div class="library-drawer" id="library-drawer">
+        <div class="library-header">
+            <h2>Kayıtlı Paletlerim</h2>
+            <button class="close-drawer-btn" id="btn-close-drawer" aria-label="Kapat">✕</button>
+        </div>
+        <div style="padding: 0 1.5rem;">
+            <div class="library-search-container">
+                <input type="text" class="library-search-input" id="library-search" placeholder="İsim veya etiket ile ara...">
+            </div>
+        </div>
+        <div class="library-content" id="library-content">
+            <!-- Kayıtlı paletler JavaScript ile buraya eklenecektir -->
+        </div>
+    </div>
+
+    <!-- Palet Kaydetme Modalı -->
+    <div class="save-modal" id="save-modal">
+        <h3>Paleti Kaydet</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">Bu renk paletine bir isim verin:</p>
+        <input type="text" class="save-modal-input" id="save-palette-input" placeholder="Palet Adı">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Etiketler (isteğe bağlı, virgülle ayırın):</p>
+        <input type="text" class="save-modal-input" id="save-palette-tags" placeholder="örn: pastel, koyu, mavi">
+        <div class="save-modal-actions">
+            <button class="btn" id="btn-cancel-save">İptal</button>
+            <button class="btn btn-primary" id="btn-confirm-save">Kaydet</button>
+        </div>
+    </div>
+
+    <!-- Dışa Aktarma Modalı (Adım 13) -->
+    <div class="save-modal export-modal" id="export-modal">
+        <h3>Paleti Dışa Aktar</h3>
+        <div class="export-tabs">
+            <button class="export-tab active" data-tab="css">CSS</button>
+            <button class="export-tab" data-tab="scss">SCSS</button>
+            <button class="export-tab" data-tab="tailwind">Tailwind</button>
+            <button class="export-tab" data-tab="json">JSON</button>
+            <button class="export-tab" data-tab="svg">SVG</button>
+        </div>
+        <div class="export-content">
+            <div class="export-tab-pane active" id="pane-css">
+                <pre><code id="code-css"></code></pre>
+                <button class="btn btn-primary btn-copy-pane" data-target="code-css">Kopyala</button>
+            </div>
+            <div class="export-tab-pane" id="pane-scss">
+                <pre><code id="code-scss"></code></pre>
+                <button class="btn btn-primary btn-copy-pane" data-target="code-scss">Kopyala</button>
+            </div>
+            <div class="export-tab-pane" id="pane-tailwind">
+                <pre><code id="code-tailwind"></code></pre>
+                <button class="btn btn-primary btn-copy-pane" data-target="code-tailwind">Kopyala</button>
+            </div>
+            <div class="export-tab-pane" id="pane-json">
+                <pre><code id="code-json"></code></pre>
+                <button class="btn btn-primary btn-copy-pane" data-target="code-json">Kopyala</button>
+            </div>
+            <div class="export-tab-pane" id="pane-svg">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Paletinizi vektörel SVG görseli olarak indirin.</p>
+                <button class="btn btn-primary" id="btn-download-svg">SVG Olarak İndir</button>
+            </div>
+        </div>
+        <div class="save-modal-actions" style="margin-top: 1.5rem;">
+            <button class="btn" id="btn-close-export">Kapat</button>
+        </div>
+    </div>
+
+    <!-- Erişilebilirlik (A11y) Analiz Modalı (Adım 8) -->
+    <div class="save-modal export-modal" id="a11y-modal">
+        <h3>Erişilebilirlik Analiz Matrisi (WCAG 2.1)</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+            Paletinizdeki renklerin birbirleriyle kontrast oranları ve okunabilirlik seviyeleri:
+        </p>
+        <div id="a11y-table-container" style="overflow-x: auto; max-height: 350px;">
+            <!-- Dinamik kontrast matrisi tablosu buraya eklenecektir -->
+        </div>
+        <div class="save-modal-actions" style="margin-top: 1.5rem;">
+            <button class="btn" id="btn-close-a11y">Kapat</button>
+        </div>
+    </div>
+
+    <!-- Renk Körlüğü Simülasyon Filtreleri SVG Matrix (Adım 12) -->
+    <svg style="position: absolute; height: 0; width: 0;">
+        <defs>
+            <filter id="protanopia">
+                <feColorMatrix type="matrix" values="0.567, 0.433, 0, 0, 0, 0.558, 0.442, 0, 0, 0, 0, 0.242, 0.758, 0, 0, 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="deuteranopia">
+                <feColorMatrix type="matrix" values="0.625, 0.375, 0, 0, 0, 0.7, 0.3, 0, 0, 0, 0, 0.3, 0.7, 0, 0, 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="tritanopia">
+                <feColorMatrix type="matrix" values="0.95, 0.05, 0, 0, 0, 0, 0.433, 0.567, 0, 0, 0, 0, 0.475, 0.525, 0, 0, 0, 0, 1, 0"/>
+            </filter>
+            <filter id="achromatopsia">
+                <feColorMatrix type="matrix" values="0.299, 0.587, 0.114, 0, 0, 0.299, 0.587, 0.114, 0, 0, 0.299, 0.587, 0.114, 0, 0, 0, 0, 0, 1, 0"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <script>
+        // Arayüz Elemanları
+        const cardsContainer = document.getElementById('palette-container');
+
+        // Global Renk Durumu (State - Renk ve Kilit Değeri)
+        let currentPalette = [
+            { hex: '#6366F1', locked: false },
+            { hex: '#EC4899', locked: false },
+            { hex: '#F59E0B', locked: false },
+            { hex: '#10B981', locked: false },
+            { hex: '#3B82F6', locked: false }
+        ];
+
+        // Geçmiş (History) Hafızası State
+        let paletteHistory = [];
+        let historyIndex = -1;
+        let draggedCardIndex = null;
+
+        // Yerel Kütüphane STORAGE_KEY
+        const STORAGE_KEY = 'antigravity_saved_palettes';
+
+        // --- RENK DÖNÜŞÜM VE KONTRAST YARDIMCILARI ---
+
+        // HSL'den HEX'e Dönüşüm Fonksiyonu
+        function hslToHex(h, s, l) {
+            l /= 100;
+            const a = s * Math.min(l, 1 - l) / 100;
+            const f = n => {
+                const k = (n + h / 30) % 12;
+                const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+                return Math.round(255 * color).toString(16).padStart(2, '0');
+            };
+            return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+        }
+
+        // HEX'ten HSL'e Dönüşüm Fonksiyonu (Kilitli rengi baz alıp şema üretmek için)
+        function hexToHsl(hex) {
+            hex = hex.replace(/^#/, '');
+            let r = parseInt(hex.substring(0, 2), 16) / 255;
+            let g = parseInt(hex.substring(2, 4), 16) / 255;
+            let b = parseInt(hex.substring(4, 6), 16) / 255;
+            
+            let max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0;
+            } else {
+                let d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+
+        // HEX'ten RGB'ye Dönüşüm Fonksiyonu
+        function hexToRgb(hex) {
+            hex = hex.replace(/^#/, '');
+            if (hex.length === 3) {
+                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            const num = parseInt(hex, 16);
+            return {
+                r: (num >> 16) & 255,
+                g: (num >> 8) & 255,
+                b: num & 255
+            };
+        }
+
+        // RGB'den HEX'e Dönüşüm Fonksiyonu
+        function rgbToHex(r, g, b) {
+            const f = x => Math.min(255, Math.max(0, x)).toString(16).padStart(2, '0').toUpperCase();
+            return `#${f(r)}${f(g)}${f(b)}`;
+        }
+
+        // Relative Luminance Değeri Hesaplama (WCAG standardı)
+        function getLuminance(hex) {
+            const rgb = hexToRgb(hex);
+            let r = rgb.r / 255;
+            let g = rgb.g / 255;
+            let b = rgb.b / 255;
+            
+            r = (r <= 0.03928) ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+            g = (g <= 0.03928) ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+            b = (b <= 0.03928) ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+            
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        }
+
+        // İki renk arasındaki Kontrast Oranını Hesaplama
+        function getContrastRatio(hex1, hex2) {
+            const l1 = getLuminance(hex1);
+            const l2 = getLuminance(hex2);
+            const bright = Math.max(l1, l2);
+            const dark = Math.min(l1, l2);
+            return (bright + 0.05) / (dark + 0.05);
+        }
+
+        // En iyi okunabilirlik sağlayan metin rengini seçer (Siyah ya da Beyaz)
+        function getBestTextColor(bgColor) {
+            const ratioWithWhite = getContrastRatio(bgColor, '#FFFFFF');
+            const ratioWithBlack = getContrastRatio(bgColor, '#000000');
+            return ratioWithWhite >= ratioWithBlack 
+                ? { color: '#FFFFFF', ratio: ratioWithWhite } 
+                : { color: '#000000', ratio: ratioWithBlack };
+        }
+
+        // Kontrast Skoru Sınıflandırması
+        function getContrastRating(ratio) {
+            if (ratio >= 7.0) return { label: 'AAA', class: 'aaa' };
+            if (ratio >= 4.5) return { label: 'AA', class: 'aa' };
+            return { label: 'Düşük', class: 'fail' };
+        }
+
+        // --- GEÇMİŞ (UNDO / REDO) YÖNETİMİ ---
+
+        // Geçmişe yeni durum kaydet
+        function pushHistory() {
+            if (historyIndex < paletteHistory.length - 1) {
+                paletteHistory = paletteHistory.slice(0, historyIndex + 1);
+            }
+            paletteHistory.push(currentPalette.map(c => ({ hex: c.hex, locked: c.locked })));
+            historyIndex++;
+
+            if (paletteHistory.length > 100) {
+                paletteHistory.shift();
+                historyIndex--;
+            }
+            updateHistoryButtons();
+        }
+
+        // Geçmişi Güncelle (Undo/Redo Aktiflik Durumları)
+        function updateHistoryButtons() {
+            const btnUndo = document.getElementById('btn-undo');
+            const btnRedo = document.getElementById('btn-redo');
+            if (btnUndo) btnUndo.disabled = (historyIndex <= 0);
+            if (btnRedo) btnRedo.disabled = (historyIndex >= paletteHistory.length - 1);
+        }
+
+        // Geri Al (Undo)
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                currentPalette = paletteHistory[historyIndex].map(c => ({ hex: c.hex, locked: c.locked }));
+                updateUI(false);
+            }
+        }
+
+        // İleri Al (Redo)
+        function redo() {
+            if (historyIndex < paletteHistory.length - 1) {
+                historyIndex++;
+                currentPalette = paletteHistory[historyIndex].map(c => ({ hex: c.hex, locked: c.locked }));
+                updateUI(false);
+            }
+        }
+
+        // --- RENK ÜRETİM KURALLARI (DİNAMİK UZUNLUKLU) ---
+
+        // Akıllı & Uyumlu Rastgele Renk Üretimi
+        function generateRandomColor() {
+            const h = Math.floor(Math.random() * 360);
+            const s = Math.floor(Math.random() * 25) + 65;
+            const l = Math.floor(Math.random() * 20) + 50;
+            return hslToHex(h, s, l);
+        }
+
+        // Renk Şemaları Matematik Motoru (Dinamik Uzunluklu)
+        function generateSchemeColors(mode, baseH, baseS, baseL, count) {
+            const colors = [];
+            switch (mode) {
+                case 'monochromatic':
+                    for (let i = 0; i < count; i++) {
+                        let step = count > 1 ? i / (count - 1) : 0;
+                        let l = 20 + Math.round(step * 60);
+                        let s = Math.max(25, baseS - 15 + Math.round(step * 10));
+                        colors.push(hslToHex(baseH, s, l));
+                    }
+                    break;
+                case 'analogous':
+                    const startOffset = -15 * Math.floor(count / 2);
+                    for (let i = 0; i < count; i++) {
+                        let offset = startOffset + (i * 15);
+                        let h = (baseH + offset + 360) % 360;
+                        let s = Math.min(95, Math.max(50, baseS - 5 + (i * 2)));
+                        let l = Math.min(85, Math.max(40, baseL - 5 + (i * 2)));
+                        colors.push(hslToHex(h, s, l));
+                    }
+                    break;
+                case 'complementary':
+                    const compH = (baseH + 180) % 360;
+                    const half = Math.floor(count / 2);
+                    for (let i = 0; i < count; i++) {
+                        if (i < count - half) {
+                            let offset = (i - Math.floor((count - half) / 2)) * 15;
+                            colors.push(hslToHex((baseH + offset + 360) % 360, baseS, baseL));
+                        } else {
+                            let offset = (i - (count - half) - Math.floor(half / 2)) * 15;
+                            colors.push(hslToHex((compH + offset + 360) % 360, baseS, baseL));
+                        }
+                    }
+                    break;
+                case 'triadic':
+                    const triadAngles = [0, 120, 240];
+                    for (let i = 0; i < count; i++) {
+                        let angleIdx = i % 3;
+                        let offset = Math.floor(i / 3) * 10;
+                        let h = (baseH + triadAngles[angleIdx] + offset + 360) % 360;
+                        colors.push(hslToHex(h, baseS, baseL));
+                    }
+                    break;
+                case 'random':
+                default:
+                    for (let i = 0; i < count; i++) {
+                        colors.push(generateRandomColor());
+                    }
+                    break;
+            }
+            return colors;
+        }
+
+        // Yeni Palet Üretme Fonksiyonu
+        function generateNewPalette(shouldPushHistory = true) {
+            const mode = document.getElementById('select-mode').value;
+            const count = currentPalette.length;
+            
+            const firstLocked = currentPalette.find(c => c.locked);
+            let baseH, baseS, baseL;
+
+            if (firstLocked) {
+                const hsl = hexToHsl(firstLocked.hex);
+                baseH = hsl.h;
+                baseS = hsl.s;
+                baseL = hsl.l;
+            } else {
+                baseH = Math.floor(Math.random() * 360);
+                baseS = Math.floor(Math.random() * 25) + 65;
+                baseL = Math.floor(Math.random() * 20) + 50;
+            }
+
+            const schemeColors = generateSchemeColors(mode, baseH, baseS, baseL, count);
+
+            currentPalette = currentPalette.map((color, index) => {
+                if (color.locked) return color;
+
+                if (mode === 'random') {
+                    return { hex: generateRandomColor(), locked: false };
+                }
+
+                return { hex: schemeColors[index], locked: false };
+            });
+            
+            updateUI(shouldPushHistory);
+        }
+
+        // Dinamik Renk Ekleme (Maksimum 10)
+        function addColorToPalette() {
+            if (currentPalette.length >= 10) return;
+            const newHex = generateRandomColor();
+            currentPalette.push({ hex: newHex, locked: false });
+            updateUI(true);
+        }
+
+        // --- GÖRSELDEN RENK ÇIKARMA (COLOR EXTRACTOR) ---
+
+        function extractColorsFromImage(imageSrc) {
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.src = imageSrc;
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                canvas.width = 100;
+                canvas.height = 100;
+                ctx.drawImage(img, 0, 0, 100, 100);
+                
+                const imageData = ctx.getImageData(0, 0, 100, 100);
+                const data = imageData.data;
+                const colorCounts = {};
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i+1];
+                    const b = data[i+2];
+                    const a = data[i+3];
+                    
+                    if (a < 128) continue;
+                    
+                    const bucketR = Math.round(r / 32) * 32;
+                    const bucketG = Math.round(g / 32) * 32;
+                    const bucketB = Math.round(b / 32) * 32;
+                    
+                    const rgbString = `${bucketR},${bucketG},${bucketB}`;
+                    colorCounts[rgbString] = (colorCounts[rgbString] || 0) + 1;
+                }
+                
+                const colors = Object.keys(colorCounts).map(rgbStr => {
+                    const parts = rgbStr.split(',').map(Number);
+                    return {
+                        hex: rgbToHex(parts[0], parts[1], parts[2]),
+                        count: colorCounts[rgbStr],
+                        rgb: parts
+                    };
+                });
+                
+                colors.sort((a, b) => b.count - a.count);
+                
+                const targetCount = currentPalette.length;
+                const selectedColors = [];
+                for (let col of colors) {
+                    if (selectedColors.length >= targetCount) break;
+                    
+                    const isDistinct = selectedColors.every(selCol => {
+                        const dist = Math.sqrt(
+                            Math.pow(col.rgb[0] - selCol.rgb[0], 2) +
+                            Math.pow(col.rgb[1] - selCol.rgb[1], 2) +
+                            Math.pow(col.rgb[2] - selCol.rgb[2], 2)
+                        );
+                        return dist > 60;
+                    });
+                    
+                    if (isDistinct) {
+                        selectedColors.push(col);
+                    }
+                }
+                
+                if (selectedColors.length < targetCount) {
+                    for (let col of colors) {
+                        if (selectedColors.length >= targetCount) break;
+                        if (!selectedColors.some(selCol => selCol.hex === col.hex)) {
+                            selectedColors.push(col);
+                        }
+                    }
+                }
+                
+                while (selectedColors.length < targetCount) {
+                    selectedColors.push({ hex: generateRandomColor() });
+                }
+                
+                let colorIdx = 0;
+                currentPalette = currentPalette.map((color) => {
+                    if (color.locked) return color;
+                    const newColor = { hex: selectedColors[colorIdx].hex, locked: false };
+                    colorIdx = (colorIdx + 1) % selectedColors.length;
+                    return newColor;
+                });
+                
+                updateUI(true);
+            };
+        }
+
+        // --- DİŞA AKTARMA MOTORU (EXPORT MODAL) ---
+
+        function openExportModal() {
+            const codeCss = document.getElementById('code-css');
+            const codeScss = document.getElementById('code-scss');
+            const codeTailwind = document.getElementById('code-tailwind');
+            const codeJson = document.getElementById('code-json');
+            
+            const colors = currentPalette.map(c => c.hex);
+            
+            if (codeCss) {
+                codeCss.textContent = `:root {\n` + 
+                    colors.map((hex, idx) => `  --color-${idx + 1}: ${hex};`).join('\n') +
+                    `\n}`;
+            }
+            
+            if (codeScss) {
+                codeScss.textContent = colors.map((hex, idx) => `$color-${idx + 1}: ${hex};`).join('\n');
+            }
+            
+            if (codeTailwind) {
+                codeTailwind.textContent = `module.exports = {\n  theme: {\n    extend: {\n      colors: {\n` +
+                    colors.map((hex, idx) => `        'color-${idx + 1}': '${hex}',`).join('\n') +
+                    `\n      }\n    }\n  }\n}`;
+            }
+            
+            if (codeJson) {
+                codeJson.textContent = JSON.stringify(colors, null, 2);
+            }
+            
+            const exportModal = document.getElementById('export-modal');
+            const libraryOverlay = document.getElementById('library-overlay');
+            if (exportModal && libraryOverlay) {
+                exportModal.classList.add('active');
+                libraryOverlay.classList.add('active');
+            }
+        }
+
+        function closeExportModal() {
+            const exportModal = document.getElementById('export-modal');
+            const libraryOverlay = document.getElementById('library-overlay');
+            if (exportModal && libraryOverlay) {
+                exportModal.classList.remove('active');
+                const libraryDrawer = document.getElementById('library-drawer');
+                const saveModal = document.getElementById('save-modal');
+                const a11yModal = document.getElementById('a11y-modal');
+                
+                const isAnyOtherOpen = (libraryDrawer && libraryDrawer.classList.contains('open')) ||
+                                       (saveModal && saveModal.classList.contains('active')) ||
+                                       (a11yModal && a11yModal.classList.contains('active'));
+                                       
+                if (!isAnyOtherOpen) {
+                    libraryOverlay.classList.remove('active');
+                }
+            }
+        }
+
+        function generateSvgContent() {
+            const w = currentPalette.length * 100, h = 120;
+            const blockW = 100;
+            let rects = '';
+            let texts = '';
+            currentPalette.forEach((c, idx) => {
+                const x = idx * blockW;
+                rects += `  <rect x="${x}" y="0" width="${blockW}" height="${h}" fill="${c.hex}" />\n`;
+                const bestText = getBestTextColor(c.hex).color;
+                texts += `  <text x="${x + blockW/2}" y="${h - 20}" fill="${bestText}" font-family="Outfit, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">${c.hex}</text>\n`;
+            });
+            
+            return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
+${rects}
+${texts}
+</svg>`;
+        }
+
+        function downloadSvg() {
+            const svgContent = generateSvgContent();
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'antigravity-colors.svg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- ERİŞİLEBİLİRLİK MODAL TABLOSU ---
+
+        function generateA11yMatrix() {
+            const tableContainer = document.getElementById('a11y-table-container');
+            if (!tableContainer) return;
+            
+            let html = `<table class="a11y-matrix-table">`;
+            html += `<thead><tr><th>Arka Plan / Metin</th>`;
+            currentPalette.forEach((c, idx) => {
+                html += `<th><span class="a11y-cell-preview" style="background-color: ${c.hex};"></span>Renk ${idx + 1}<br><code style="font-size:0.7rem;">${c.hex}</code></th>`;
+            });
+            html += `</tr></thead><tbody>`;
+            
+            currentPalette.forEach((bgCard, bgIdx) => {
+                html += `<tr>`;
+                html += `<td style="text-align:left; font-weight:600;"><span class="a11y-cell-preview" style="background-color: ${bgCard.hex};"></span>Renk ${bgIdx + 1}</td>`;
+                
+                currentPalette.forEach((textCard, textIdx) => {
+                    if (bgIdx === textIdx) {
+                        html += `<td style="color:var(--text-muted); font-style:italic;">Aynı Renk</td>`;
+                    } else {
+                        const ratio = getContrastRatio(bgCard.hex, textCard.hex);
+                        const rating = getContrastRating(ratio);
+                        const isPass = ratio >= 4.5;
+                        const badgeClass = isPass ? 'pass' : 'fail';
+                        const statusLabel = isPass ? (ratio >= 7.0 ? 'AAA' : 'AA') : 'Geçersiz';
+                        
+                        html += `<td>
+                            <div style="font-weight:700; font-size:0.9rem;">${ratio.toFixed(1)}:1</div>
+                            <span class="a11y-status-pill ${badgeClass}">${statusLabel}</span>
+                        </td>`;
+                    }
+                });
+                html += `</tr>`;
+            });
+            
+            html += `</tbody></table>`;
+            tableContainer.innerHTML = html;
+        }
+
+        function openA11yModal() {
+            generateA11yMatrix();
+            const a11yModal = document.getElementById('a11y-modal');
+            const libraryOverlay = document.getElementById('library-overlay');
+            if (a11yModal && libraryOverlay) {
+                a11yModal.classList.add('active');
+                libraryOverlay.classList.add('active');
+            }
+        }
+
+        // İnce Ayar sürgüleri veya anlık değişimlerde kartı yenilemeden tekil DOM güncelleme
+        function updateSingleCardDOM(card, colorInfo) {
+            card.style.backgroundColor = colorInfo.hex;
+            
+            const { color: textColor, ratio } = getBestTextColor(colorInfo.hex);
+            const rating = getContrastRating(ratio);
+            
+            const badge = card.querySelector('.contrast-badge');
+            if (badge) {
+                badge.textContent = `${ratio.toFixed(1)}:1 (${rating.label})`;
+                badge.className = `contrast-badge ${rating.class}`;
+            }
+
+            const deleteBtn = card.querySelector('.card-delete-btn');
+            if (deleteBtn) {
+                deleteBtn.style.color = textColor;
+            }
+            
+            const hexTextElement = card.querySelector('.color-hex');
+            if (hexTextElement) {
+                hexTextElement.textContent = colorInfo.hex;
+                hexTextElement.style.color = textColor;
+            }
+
+            const statusText = card.querySelector('.card-status');
+            if (statusText) {
+                statusText.style.color = textColor === '#000000' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)';
+            }
+            
+            const detailsPanel = card.querySelector('.card-details');
+            if (detailsPanel) {
+                if (textColor === '#000000') {
+                    detailsPanel.style.backgroundColor = 'rgba(255, 255, 255, 0.82)';
+                    detailsPanel.style.borderColor = 'rgba(0, 0, 0, 0.08)';
+                    detailsPanel.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+                } else {
+                    detailsPanel.style.backgroundColor = 'rgba(10, 10, 12, 0.75)';
+                    detailsPanel.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                    detailsPanel.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.3)';
+                }
+            }
+            
+            const lockBtn = card.querySelector('.lock-btn');
+            const pickerBtn = card.querySelector('.picker-btn');
+            const slidersBtn = card.querySelector('.sliders-toggle-btn');
+            
+            [lockBtn, pickerBtn, slidersBtn].forEach(btn => {
+                if (btn) {
+                    if (btn === lockBtn && colorInfo.locked) {
+                        return;
+                    }
+                    btn.style.color = textColor;
+                    btn.style.borderColor = textColor === '#000000' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
+                    btn.style.background = textColor === '#000000' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.06)';
+                }
+            });
+
+            const colorInput = card.querySelector('.color-input');
+            if (colorInput) {
+                colorInput.value = colorInfo.hex;
+            }
+
+            const footerStatus = document.querySelector('.footer-status');
+            if (footerStatus) {
+                let lowestRatio = 999;
+                currentPalette.forEach(c => {
+                    const r = getBestTextColor(c.hex).ratio;
+                    if (r < lowestRatio) lowestRatio = r;
+                });
+                let scoreText = '';
+                if (lowestRatio >= 7.0) {
+                    scoreText = '🟢 Harika (AAA)';
+                } else if (lowestRatio >= 4.5) {
+                    scoreText = '🟡 Uygun (AA)';
+                } else {
+                    scoreText = '🔴 Zayıf Kontrast';
+                }
+                footerStatus.innerHTML = `Erişilebilirlik Skoru: <strong>${scoreText}</strong>`;
+            }
+        }
+
+        function closeA11yModal() {
+            const a11yModal = document.getElementById('a11y-modal');
+            const libraryOverlay = document.getElementById('library-overlay');
+            if (a11yModal && libraryOverlay) {
+                a11yModal.classList.remove('active');
+                const libraryDrawer = document.getElementById('library-drawer');
+                const saveModal = document.getElementById('save-modal');
+                const exportModal = document.getElementById('export-modal');
+                
+                const isAnyOtherOpen = (libraryDrawer && libraryDrawer.classList.contains('open')) ||
+                                       (saveModal && saveModal.classList.contains('active')) ||
+                                       (exportModal && exportModal.classList.contains('active'));
+                                       
+                if (!isAnyOtherOpen) {
+                    libraryOverlay.classList.remove('active');
+                }
+            }
+        }
+
+        // --- ARAYÜZÜ GÜNCELLEME VE KARTLARI DİNAMİK YARATMA (DOM MANİPÜLASYONU) ---
+
+        function updateUI(shouldPushHistory = true) {
+            if (!cardsContainer) return;
+
+            cardsContainer.innerHTML = '';
+            cardsContainer.style.setProperty('--palette-size', currentPalette.length);
+
+            let lowestRatio = 999;
+
+            currentPalette.forEach((colorInfo, index) => {
+                const { color: textColor, ratio } = getBestTextColor(colorInfo.hex);
+                if (ratio < lowestRatio) lowestRatio = ratio;
+                
+                const rating = getContrastRating(ratio);
+                const hsl = hexToHsl(colorInfo.hex);
+
+                const card = document.createElement('section');
+                card.className = 'color-card';
+                card.setAttribute('draggable', 'true');
+                card.style.backgroundColor = colorInfo.hex;
+
+                const deleteBtnHtml = currentPalette.length > 2 
+                    ? `<button class="card-delete-btn" aria-label="Rengi Sil" style="color: ${textColor};">✕</button>`
+                    : '';
+
+                card.innerHTML = `
+                    <span class="contrast-badge ${rating.class}">${ratio.toFixed(1)}:1 (${rating.label})</span>
+                    ${deleteBtnHtml}
+                    <div class="copy-toast">Kopyalandı!</div>
+                    
+                    <!-- HSL İnce Ayar Sürgüleri (Adım 4) -->
+                    <div class="hsl-sliders-panel">
+                        <div class="slider-group">
+                            <label>Ton (H) <span>${hsl.h}°</span></label>
+                            <input type="range" class="hsl-range range-h" min="0" max="360" value="${hsl.h}">
+                        </div>
+                        <div class="slider-group">
+                            <label>Doygunluk (S) <span>${hsl.s}%</span></label>
+                            <input type="range" class="hsl-range range-s" min="0" max="100" value="${hsl.s}">
+                        </div>
+                        <div class="slider-group">
+                            <label>Işık (L) <span>${hsl.l}%</span></label>
+                            <input type="range" class="hsl-range range-l" min="0" max="100" value="${hsl.l}">
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <span class="color-hex" style="color: ${textColor};">${colorInfo.hex}</span>
+                        <span class="card-status" style="color: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.6)' : 'rgba(255, 255, 255, 0.6)'};">${colorInfo.locked ? 'Kilitli' : 'Kilitsiz'}</span>
+                        <div class="card-actions">
+                            <button class="lock-btn" aria-label="Kilitle" style="color: ${textColor}; border-color: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)'}; background: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.06)'};">${colorInfo.locked ? '🔒' : '🔓'}</button>
+                            <button class="sliders-toggle-btn" aria-label="İnce Ayar" style="color: ${textColor}; border-color: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)'}; background: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.06)'};">🎛️</button>
+                            <button class="picker-btn" aria-label="Renk Seç" style="color: ${textColor}; border-color: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)'}; background: ${textColor === '#000000' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.06)'};">🎨</button>
+                            <input type="color" class="color-input" style="display: none;" value="${colorInfo.hex}">
+                        </div>
+                    </div>
+                `;
+
+                const detailsPanel = card.querySelector('.card-details');
+                if (detailsPanel) {
+                    if (textColor === '#000000') {
+                        detailsPanel.style.backgroundColor = 'rgba(255, 255, 255, 0.82)';
+                        detailsPanel.style.borderColor = 'rgba(0, 0, 0, 0.08)';
+                        detailsPanel.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+                    } else {
+                        detailsPanel.style.backgroundColor = 'rgba(10, 10, 12, 0.75)';
+                        detailsPanel.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                        detailsPanel.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.3)';
+                    }
+                }
+
+                if (colorInfo.locked) {
+                    card.classList.add('is-locked');
+                    const lockBtn = card.querySelector('.lock-btn');
+                    if (lockBtn) {
+                        lockBtn.style.color = '#F59E0B';
+                        lockBtn.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                        lockBtn.style.background = 'rgba(245, 158, 11, 0.15)';
+                    }
+                }
+
+                // --- Dinamik Kart Olay Dinleyicileri ---
+                card.querySelector('.lock-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    colorInfo.locked = !colorInfo.locked;
+                    updateUI(false);
+                });
+
+                const pickerBtn = card.querySelector('.picker-btn');
+                const colorInput = card.querySelector('.color-input');
+                pickerBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    colorInput.click();
+                });
+                colorInput.addEventListener('input', (e) => {
+                    const newHex = e.target.value.toUpperCase();
+                    colorInfo.hex = newHex;
+                    updateSingleCardDOM(card, colorInfo);
+                });
+                colorInput.addEventListener('change', () => {
+                    pushHistory();
+                });
+
+                const slidersBtn = card.querySelector('.sliders-toggle-btn');
+                const slidersPanel = card.querySelector('.hsl-sliders-panel');
+                slidersBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.hsl-sliders-panel').forEach(p => {
+                        if (p !== slidersPanel) p.style.display = 'none';
+                    });
+                    const isShown = slidersPanel.style.display === 'flex';
+                    slidersPanel.style.display = isShown ? 'none' : 'flex';
+                });
+
+                const sliderH = slidersPanel.querySelector('.range-h');
+                const sliderS = slidersPanel.querySelector('.range-s');
+                const sliderL = slidersPanel.querySelector('.range-l');
+
+                function handleSliderInput() {
+                    const h = parseInt(sliderH.value);
+                    const s = parseInt(sliderS.value);
+                    const l = parseInt(sliderL.value);
+                    const newHex = hslToHex(h, s, l);
+                    colorInfo.hex = newHex;
+
+                    slidersPanel.querySelector('.range-h').previousElementSibling.querySelector('span').textContent = `${h}°`;
+                    slidersPanel.querySelector('.range-s').previousElementSibling.querySelector('span').textContent = `${s}%`;
+                    slidersPanel.querySelector('.range-l').previousElementSibling.querySelector('span').textContent = `${l}%`;
+
+                    updateSingleCardDOM(card, colorInfo);
+                }
+
+                [sliderH, sliderS, sliderL].forEach(sl => {
+                    sl.addEventListener('input', handleSliderInput);
+                    sl.addEventListener('change', () => {
+                        pushHistory();
+                    });
+                });
+
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.hsl-sliders-panel') && !e.target.closest('.sliders-toggle-btn')) {
+                        slidersPanel.style.display = 'none';
+                    }
+                });
+
+                const deleteBtn = card.querySelector('.card-delete-btn');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        currentPalette.splice(index, 1);
+                        updateUI(true);
+                    });
+                }
+
+                const hexText = card.querySelector('.color-hex');
+                const toast = card.querySelector('.copy-toast');
+                hexText.style.cursor = 'copy';
+                hexText.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText(colorInfo.hex).then(() => {
+                        if (toast) {
+                            toast.classList.add('show');
+                            setTimeout(() => toast.classList.remove('show'), 1000);
+                        }
+                    });
+                });
+
+                card.addEventListener('dragstart', (e) => {
+                    draggedCardIndex = index;
+                    e.dataTransfer.effectAllowed = 'move';
+                    card.classList.add('dragging');
+                });
+                card.addEventListener('dragend', () => {
+                    card.classList.remove('dragging');
+                    draggedCardIndex = null;
+                });
+                card.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+                card.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (draggedCardIndex !== null && draggedCardIndex !== index) {
+                        const temp = currentPalette[draggedCardIndex];
+                        currentPalette.splice(draggedCardIndex, 1);
+                        currentPalette.splice(index, 0, temp);
+                        updateUI(true);
+                    }
+                });
+
+                cardsContainer.appendChild(card);
+            });
+
+            const footerStatus = document.querySelector('.footer-status');
+            if (footerStatus) {
+                let scoreText = '';
+                if (lowestRatio >= 7.0) {
+                    scoreText = '🟢 Harika (AAA)';
+                } else if (lowestRatio >= 4.5) {
+                    scoreText = '🟡 Uygun (AA)';
+                } else {
+                    scoreText = '🔴 Zayıf Kontrast';
+                }
+                footerStatus.innerHTML = `Erişilebilirlik Skoru: <strong>${scoreText}</strong>`;
+            }
+
+            if (shouldPushHistory) {
+                pushHistory();
+            }
+        }
+
+        // --- YEREL KÜTÜPHANE MANTIĞI (LOCALSTORAGE) ---
+
+        function getSavedPalettes() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function savePalette(name) {
+            const palettes = getSavedPalettes();
+            const colorsArray = currentPalette.map(c => c.hex);
+            
+            const tagsInput = document.getElementById('save-palette-tags');
+            let tagsArray = [];
+            if (tagsInput) {
+                tagsArray = tagsInput.value.split(',')
+                    .map(t => t.trim().toLowerCase())
+                    .filter(t => t !== '');
+            }
+            
+            const newPalette = {
+                id: Date.now().toString(),
+                name: name || `Palet #${palettes.length + 1}`,
+                colors: colorsArray,
+                tags: tagsArray
+            };
+
+            palettes.push(newPalette);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(palettes));
+            
+            if (tagsInput) tagsInput.value = '';
+            updateLibraryUI();
+        }
+
+        function deletePalette(id) {
+            let palettes = getSavedPalettes();
+            palettes = palettes.filter(p => p.id !== id);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(palettes));
+            
+            updateLibraryUI();
+        }
+
+        function loadPalette(colors) {
+            currentPalette = colors.map(hex => ({ hex: hex, locked: false }));
+            updateUI(true);
+            closeLibraryDrawer();
+        }
+
+        function updateLibraryUI() {
+            const palettes = getSavedPalettes();
+            const libraryContent = document.getElementById('library-content');
+            const libraryBtn = document.getElementById('btn-library');
+            const searchInput = document.getElementById('library-search');
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+            if (libraryBtn) {
+                libraryBtn.innerHTML = `📚 Kütüphanem (${palettes.length})`;
+            }
+
+            if (!libraryContent) return;
+            libraryContent.innerHTML = '';
+
+            const filteredPalettes = palettes.filter(palette => {
+                if (query === '') return true;
+                const matchesName = palette.name.toLowerCase().includes(query);
+                const matchesTags = palette.tags && palette.tags.some(tag => tag.includes(query));
+                return matchesName || matchesTags;
+            });
+
+            if (filteredPalettes.length === 0) {
+                libraryContent.innerHTML = '<div class="empty-library-msg">Arama sonucu eşleşen palet bulunamadı.</div>';
+                return;
+            }
+
+            filteredPalettes.forEach(palette => {
+                const card = document.createElement('div');
+                card.className = 'saved-palette-card';
+
+                let colorsHtml = '';
+                palette.colors.forEach(hex => {
+                    colorsHtml += `<div class="saved-palette-color-block" style="background-color: ${hex};"></div>`;
+                });
+
+                let tagsHtml = '';
+                if (palette.tags && palette.tags.length > 0) {
+                    tagsHtml = `<div class="saved-palette-tags">` +
+                        palette.tags.map(t => `<span class="palette-tag-badge">${escapeHtml(t)}</span>`).join('') +
+                        `</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="saved-palette-info">
+                        <span class="saved-palette-name">${escapeHtml(palette.name)}</span>
+                    </div>
+                    <div class="saved-palette-colors">
+                        ${colorsHtml}
+                    </div>
+                    ${tagsHtml}
+                    <div class="saved-palette-actions">
+                        <button class="saved-palette-btn load" data-id="${palette.id}">Yükle</button>
+                        <button class="saved-palette-btn delete" data-id="${palette.id}">Sil</button>
+                    </div>
+                `;
+
+                card.querySelector('.load').addEventListener('click', () => {
+                    loadPalette(palette.colors);
+                });
+
+                card.querySelector('.delete').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deletePalette(palette.id);
+                });
+
+                libraryContent.appendChild(card);
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        const libraryDrawer = document.getElementById('library-drawer');
+        const libraryOverlay = document.getElementById('library-overlay');
+        const saveModal = document.getElementById('save-modal');
+
+        function openLibraryDrawer() {
+            if (libraryDrawer && libraryOverlay) {
+                const searchInput = document.getElementById('library-search');
+                if (searchInput) searchInput.value = '';
+                updateLibraryUI();
+                libraryDrawer.classList.add('open');
+                libraryOverlay.classList.add('active');
+            }
+        }
+
+        function closeLibraryDrawer() {
+            if (libraryDrawer && libraryOverlay) {
+                libraryDrawer.classList.remove('open');
+                const saveModal = document.getElementById('save-modal');
+                const exportModal = document.getElementById('export-modal');
+                const a11yModal = document.getElementById('a11y-modal');
+                
+                const isAnyOtherOpen = (saveModal && saveModal.classList.contains('active')) ||
+                                       (exportModal && exportModal.classList.contains('active')) ||
+                                       (a11yModal && a11yModal.classList.contains('active'));
+                                       
+                if (!isAnyOtherOpen) {
+                    libraryOverlay.classList.remove('active');
+                }
+            }
+        }
+
+        function openSaveModal() {
+            if (saveModal && libraryOverlay) {
+                const input = document.getElementById('save-palette-input');
+                const tagsInput = document.getElementById('save-palette-tags');
+                const palettes = getSavedPalettes();
+                if (input) {
+                    input.value = `Palet #${palettes.length + 1}`;
+                }
+                if (tagsInput) {
+                    tagsInput.value = '';
+                }
+                saveModal.classList.add('active');
+                libraryOverlay.classList.add('active');
+                if (input) {
+                    setTimeout(() => input.focus(), 100);
+                }
+            }
+        }
+
+        function closeSaveModal() {
+            if (saveModal && libraryOverlay) {
+                saveModal.classList.remove('active');
+                const libraryDrawer = document.getElementById('library-drawer');
+                const exportModal = document.getElementById('export-modal');
+                const a11yModal = document.getElementById('a11y-modal');
+                
+                const isAnyOtherOpen = (libraryDrawer && libraryDrawer.classList.contains('open')) ||
+                                       (exportModal && exportModal.classList.contains('active')) ||
+                                       (a11yModal && a11yModal.classList.contains('active'));
+                                       
+                if (!isAnyOtherOpen) {
+                    libraryOverlay.classList.remove('active');
+                }
+            }
+        }
+
+        // --- DINLEYICILER (EVENT LISTENERS) ---
+
+        const generateButton = document.getElementById('btn-generate');
+        if (generateButton) {
+            generateButton.addEventListener('click', () => {
+                generateNewPalette(true);
+            });
+        }
+
+        const addColorBtn = document.getElementById('btn-add-color');
+        if (addColorBtn) {
+            addColorBtn.addEventListener('click', () => {
+                addColorToPalette();
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            const activeTag = document.activeElement.tagName;
+            if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+
+            if (e.code === 'Space' || e.key === ' ') {
+                e.preventDefault();
+                generateNewPalette(true);
+            }
+
+            const isCmdOrCtrl = e.metaKey || e.ctrlKey;
+            if (isCmdOrCtrl && e.key.toLowerCase() === 'z') {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    redo();
+                } else {
+                    undo();
+                }
+            } else if (isCmdOrCtrl && e.key.toLowerCase() === 'y') {
+                e.preventDefault();
+                redo();
+            }
+        });
+
+        const btnUndo = document.getElementById('btn-undo');
+        const btnRedo = document.getElementById('btn-redo');
+        if (btnUndo) btnUndo.addEventListener('click', undo);
+        if (btnRedo) btnRedo.addEventListener('click', redo);
+
+        const libraryBtn = document.getElementById('btn-library');
+        if (libraryBtn) {
+            libraryBtn.addEventListener('click', openLibraryDrawer);
+        }
+
+        const closeDrawerBtn = document.getElementById('btn-close-drawer');
+        if (closeDrawerBtn) {
+            closeDrawerBtn.addEventListener('click', closeLibraryDrawer);
+        }
+
+        const saveBtn = document.getElementById('btn-save');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', openSaveModal);
+        }
+
+        const cancelSaveBtn = document.getElementById('btn-cancel-save');
+        if (cancelSaveBtn) {
+            cancelSaveBtn.addEventListener('click', closeSaveModal);
+        }
+
+        const confirmSaveBtn = document.getElementById('btn-confirm-save');
+        if (confirmSaveBtn) {
+            confirmSaveBtn.addEventListener('click', () => {
+                const input = document.getElementById('save-palette-input');
+                const name = input ? input.value.trim() : '';
+                savePalette(name);
+                closeSaveModal();
+            });
+        }
+
+        const librarySearch = document.getElementById('library-search');
+        if (librarySearch) {
+            librarySearch.addEventListener('input', () => {
+                updateLibraryUI();
+            });
+        }
+
+        if (libraryOverlay) {
+            libraryOverlay.addEventListener('click', () => {
+                closeLibraryDrawer();
+                closeSaveModal();
+                closeExportModal();
+                closeA11yModal();
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLibraryDrawer();
+                closeSaveModal();
+                closeExportModal();
+                closeA11yModal();
+            }
+        });
+
+        const exportBtn = document.getElementById('btn-copy-css');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', openExportModal);
+        }
+
+        const closeExportBtn = document.getElementById('btn-close-export');
+        if (closeExportBtn) {
+            closeExportBtn.addEventListener('click', closeExportModal);
+        }
+
+        const exportTabs = document.querySelectorAll('.export-tab');
+        exportTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                exportTabs.forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.export-tab-pane').forEach(p => p.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const targetTab = tab.getAttribute('data-tab');
+                const targetPane = document.getElementById(`pane-${targetTab}`);
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-copy-pane').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const codeElement = document.getElementById(targetId);
+                if (codeElement) {
+                    navigator.clipboard.writeText(codeElement.textContent).then(() => {
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = 'Kopyalandı! ✓';
+                        btn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                        }, 1500);
+                    }).catch(err => {
+                        console.error('Kopyalama hatası:', err);
+                    });
+                }
+            });
+        });
+
+        const downloadSvgBtn = document.getElementById('btn-download-svg');
+        if (downloadSvgBtn) {
+            downloadSvgBtn.addEventListener('click', downloadSvg);
+        }
+
+        const a11yBtn = document.getElementById('btn-a11y');
+        if (a11yBtn) {
+            a11yBtn.addEventListener('click', openA11yModal);
+        }
+
+        const closeA11yBtn = document.getElementById('btn-close-a11y');
+        if (closeA11yBtn) {
+            closeA11yBtn.addEventListener('click', closeA11yModal);
+        }
+
+        const selectSim = document.getElementById('select-sim');
+        if (selectSim) {
+            selectSim.addEventListener('change', (e) => {
+                const simValue = e.target.value;
+                if (cardsContainer) {
+                    if (simValue === 'none') {
+                        cardsContainer.style.filter = 'none';
+                    } else {
+                        cardsContainer.style.filter = `url(#${simValue})`;
+                    }
+                }
+            });
+        }
+
+        const btnUpload = document.getElementById('btn-upload');
+        const imageInput = document.getElementById('image-input');
+
+        if (btnUpload && imageInput) {
+            btnUpload.addEventListener('click', () => {
+                imageInput.click();
+            });
+
+            imageInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            extractColorsFromImage(event.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+        }
+
+        const dragOverlay = document.createElement('div');
+        dragOverlay.className = 'drag-overlay';
+        dragOverlay.id = 'drag-overlay';
+        dragOverlay.innerHTML = `
+            <span style="font-size: 3rem;">📷</span>
+            <div>Görseli Buraya Bırakarak Renkleri Çıkarın</div>
+            <div style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">Herhangi bir resmi sürükleyip bırakabilirsiniz</div>
+        `;
+        document.body.appendChild(dragOverlay);
+
+        window.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            dragOverlay.classList.add('active');
+        });
+
+        window.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dragOverlay.classList.add('active');
+        });
+
+        window.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            if (e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+                dragOverlay.classList.remove('active');
+            }
+        });
+
+        window.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragOverlay.classList.remove('active');
+            
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        extractColorsFromImage(event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // --- PWA SERVICE WORKER REGISTRATION ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker başarıyla kaydedildi.', reg))
+                    .catch(err => console.error('Service Worker kaydı başarısız:', err));
+            });
+        }
+
+        // --- INITIALIZATION ---
+        generateNewPalette(true);
+        updateLibraryUI();
+        console.log("Antigravity Colors: Tüm gelişmiş özellikler hazır!");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Başlık - Modernize Edilmiş Sayfa</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- Top Header & Navigation -->
+    <header class="app-header">
+        <div class="container nav-container">
+            <div class="brand">Antigravity</div>
+            <div class="nav-right">
+                <nav class="nav-links">
+                    <a href="#about-us" class="nav-link">Blog</a>
+                    <a href="#" class="btn-login">Login</a>
+                </nav>
+                <button id="theme-toggle" class="theme-btn" aria-label="Temayı Değiştir"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1>Hoşgeldiniz</h1>
+            <h2>Sitemizi inceleyiniz.</h2>
+            <p class="hero-lead">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem, voluptatum nemo similique voluptatem natus
+                deleniti ducimus quaerat itaque officiis quas quidem, tenetur hic quisquam voluptatem. Placeat aspernatur rerum
+                voluptatibus explicabo.
+            </p>
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Bir şey yazınız...">
+            </div>
+        </section>
+
+        <!-- Main Content Layout -->
+        <div class="grid-layout">
+            <!-- Sidebar / Categories Section -->
+            <aside class="sidebar-card">
+                <h3>Kategori Başlığı</h3>
+                <div class="list-section">
+                    <h4>Liste</h4>
+                    <ul>
+                        <li><span class="icon">📁</span>İçerik 1</li>
+                        <li><span class="icon">📁</span>İçerik 2</li>
+                        <li><span class="icon">📁</span>İçerik 3</li>
+                        <li><span class="icon">📁</span>İçerik 4</li>
+                        <li><span class="icon">📁</span>İçerik 5</li>
+                    </ul>
+                    
+                    <h4>Sıralı Liste</h4>
+                    <ol>
+                        <li>1. Madde</li>
+                        <li>2. Madde</li>
+                        <li>3. Madde</li>
+                        <li>4. Madde</li>
+                        <li>5. Madde</li>
+                    </ol>
+                </div>
+            </aside>
+
+            <!-- Blog Post Section -->
+            <section id="about-us" class="blog-section">
+                <article class="blog-card">
+                    <div class="blog-image-wrapper">
+                        <img src="manzara.jpg" alt="Manzara" />
+                        <span class="blog-tag">Yeni Post</span>
+                    </div>
+                    <div class="blog-content">
+                        <h2>Yeni blog postumuz</h2>
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem, voluptatum nemo similique voluptatem
+                            natus deleniti ducimus quaerat itaque officiis quas quidem, tenetur hic quisquam voluptatem. Placeat
+                            aspernatur rerum voluptatibus explicabo.
+                        </p>
+                        <div class="blog-footer">
+                            <button class="btn-primary" onclick="Tiklandi()">Tıkla</button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container">
+            <p>&copy; 2026 Antigravity. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
